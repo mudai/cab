@@ -1,6 +1,13 @@
 Fly::Application.routes.draw do
-  get 'login', to: 'sessions#new', as: 'login'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+  scope '/admin/:org', module: :admin do # 管理画面
+    get 'login', to: 'sessions#new', as: 'admin_login'
+    get 'logout', to: 'sessions#destroy', as: 'admin_logout'
+  end
+  scope ":org", module: :user do # ユーザー画面
+    root to: "home#index" 
+    get 'login', to: 'sessions#new', as: 'login'
+    get 'logout', to: 'sessions#destroy', as: 'logout'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
