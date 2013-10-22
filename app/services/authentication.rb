@@ -1,29 +1,21 @@
-class Authentication
-  def initialize(params)
-    @params = params
+class AuthenticationService
+  def initialize(org_dir, login_id, password)
+    @org_dir, @login_id, @password = login_id, password, org_dir
   end
 
   def user
-    @user ||= @omniauth ? user_from_omniauth : user_with_password
+    @user ||= user_with_password
   end
 
-  def authenticated?
+  # 認証する
+  def authenticate?
     user.present?
   end
 
   private
 
-  def user_from_omniauth
-    User.where(@omniauth.slice(:provider, :uid)).first_or_initialize.tap do |user|
-      user.provider = @omniauth[:provider]
-      user.uid = @omniauth[:uid]
-      user.username = @omniauth[:info][:nickname]
-      user.save!
-    end
-  end
-
   def user_with_password
-    user = User.find_by_username(@params[:username])
-    user && user.authenticate(@params[:password])
+    user = User.find_by(login_id: @login_id)
+    user && user.authenticate(@password) # user.rbモデルにhas_secure_passwordをつけておく
   end
 end
