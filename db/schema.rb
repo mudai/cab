@@ -11,16 +11,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131020135041) do
+ActiveRecord::Schema.define(version: 20131022081008) do
 
-  create_table "users", force: true do |t|
-    t.string   "login_id"
-    t.string   "email"
-    t.string   "password_digest"
-    t.string   "password_reset_token"
-    t.datetime "password_reset_sent_at"
+  create_table "login_histories", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "user_id"
+    t.string   "ip_address"
+    t.string   "user_agent"
+    t.datetime "logged_in_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "login_id_histories", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "user_id"
+    t.string   "before_login_id"
+    t.datetime "changed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "login_id_histories", ["organization_id", "user_id"], name: "index_login_id_histories_on_organization_id_and_user_id"
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.string   "full_name"
+    t.string   "directory"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "password_histories", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "user_id"
+    t.string   "before_password_digest"
+    t.datetime "changed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "password_histories", ["organization_id", "user_id"], name: "index_password_histories_on_organization_id_and_user_id"
+
+  create_table "users", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "login_id"
+    t.string   "password_digest"
+    t.datetime "first_logged_in_at"
+    t.datetime "last_logged_in_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["organization_id", "login_id"], name: "index_users_on_organization_id_and_login_id"
 
 end

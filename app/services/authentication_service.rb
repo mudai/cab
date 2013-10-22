@@ -14,9 +14,15 @@ class AuthenticationService
     user.present?
   end
 
-  # ログイン後の処理
-  def after_authenticate!
-    # 認証後のログ書き込み処理を入れる
+  # ログインログをとる
+  def authenticate_logging!(request)
+    # 認証後のログインログ書き込み処理を入れる
+    user.login_histories.create!(
+      organization_id: user.organization_id,
+      ip_address: request.remote_ip,
+      user_agent: request.user_agent,
+      logged_in_at: Time.now
+    )
   end
 
   private

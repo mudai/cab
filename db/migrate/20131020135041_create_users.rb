@@ -1,12 +1,14 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      t.string :login_id
-      t.string :email
-      t.string :password_digest
-      t.string :password_reset_token
-      t.datetime :password_reset_sent_at
+      t.integer :organization_id
+      t.string :login_id # ログインID
+      t.string :password_digest # 暗号化済みパスワード
+      t.datetime :first_logged_in_at # 初回ログイン日時
+      t.datetime :last_logged_in_at # 最終ログイン日時
       t.timestamps
     end
+
+    add_index :users, [:organization_id, :login_id]
   end
 end
