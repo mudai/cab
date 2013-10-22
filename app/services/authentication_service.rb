@@ -1,7 +1,7 @@
 class AuthenticationService
   # 認証処理を担うクラス
   def initialize(org_dir, login_id, password)
-    @org_dir, @login_id, @password = login_id, password, org_dir
+    @org_dir, @login_id, @password = org_dir, login_id, password
   end
 
   # 認証が可能なユーザーを取得

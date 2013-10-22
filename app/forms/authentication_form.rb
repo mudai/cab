@@ -14,7 +14,7 @@ class AuthenticationForm
   def initialize(params = {})
     self.org_dir = params[:org_dir]
     self.login_id = params[:login_id]
-    self.password = params[:org_dir]
+    self.password = params[:password]
   end
 
   # ログインボタンを押されたときの処理
