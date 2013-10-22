@@ -5,11 +5,11 @@ class User::SessionsController < User::BaseController
 
   def login
     clear_login_session # 既にログインしていた場合はログアウトさせる
-    @auth_form = AuthenticationForm.new(request)
+    @auth_form = AuthenticationForm.new(current_org, request)
   end
 
   def login_process
-    @auth_form = AuthenticationForm.new(request, login_params)
+    @auth_form = AuthenticationForm.new(current_org, request, login_params)
     if @auth_form.submit
       session[:user_id] = @auth_form.user.id
       cookies.signed[:secure_user_id] = {secure: true, value: "fly_secure_key_#{@auth_form.user.id}"}

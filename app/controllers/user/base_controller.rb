@@ -24,4 +24,9 @@ class User::BaseController < ApplicationController
     end
   end
   helper_method :current_user
+
+  def current_org
+    @org ||= Organization.find_by(directory: params[:org_dir])
+  end
+  helper_method :current_org
 end

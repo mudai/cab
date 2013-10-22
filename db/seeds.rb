@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+org = Organization.new(name: "HCC", full_name: "HCC健康保健組合", directory: "hcc")
+org.save
+
+user = org.users.new
+user.login_id = "test"
+user.password = "test"
+user.password_confirmation = "test"
+user.save
