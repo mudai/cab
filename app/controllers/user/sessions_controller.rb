@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 class User::SessionsController < User::BaseController
+  skip_before_filter :authenticate_user!, only: [:login, :login_process, :logout]
+
   def login
     clear_login_session # 既にログインしていた場合はログアウトさせる
-    session[:return_to] = params[:return_to] if params[:return_to]
     @auth_form = AuthenticationForm.new
   end
 

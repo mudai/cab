@@ -4,6 +4,18 @@ class User::BaseController < ApplicationController
   private
 
   def authenticate_user!
+    unless authorized?
+      store_location
+      redirect_to login_path
+    end
+  end
+
+  def authorized?
+    current_user.present?
+  end
+
+  def store_location
+    session[:return_to] = request.url
   end
 
   def current_user

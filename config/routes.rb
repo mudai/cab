@@ -4,10 +4,11 @@ Fly::Application.routes.draw do
     get 'logout', to: 'sessions#destroy', as: 'admin_logout'
   end
   scope ":org_dir", module: :user do # ユーザー画面
-    root to: "home#index" 
+    root to: "home#index"
     get 'login', to: 'sessions#login', as: 'login'
     post 'login_process', to: 'sessions#login_process', as: 'login_process'
     get 'logout', to: 'sessions#logout', as: 'logout'
+    resource :account, only: [:edit, :update]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
