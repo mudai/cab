@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 class AuthenticationForm
   include ActiveModel::Model
 
@@ -9,9 +11,14 @@ class AuthenticationForm
     false
   end
 
+  def initialize(params = {})
+    self.org_dir = params[:org_dir]
+    self.login_id = params[:login_id]
+    self.password = params[:org_dir]
+  end
+
   # ログインボタンを押されたときの処理
-  def submit(params)
-    self.org_dir, self.login_id, self.password = params[:org_dir], params[:login_id], params[:password]
+  def submit
     auth = AuthenticationService.new(org_dir, login_id, password)
 
     # org_dir, login_id, passwordの入力チェック, 認証可能かどうか
