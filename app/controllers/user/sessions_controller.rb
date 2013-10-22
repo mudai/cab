@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 class User::SessionsController < User::BaseController
-  skip_before_filter :authenticate_user!, only: [:login, :login_process, :logout]
+  skip_before_action :authenticate_user!, only: [:login, :login_process, :logout]
+  before_action :org_dir_check!, only: :login
 
   def login
     clear_login_session # 既にログインしていた場合はログアウトさせる
@@ -33,5 +34,11 @@ class User::SessionsController < User::BaseController
   def clear_login_session
     session[:user_id] = nil
     cookies.delete(:secure_user_id)
+  end
+
+  def org_dir_check! # URLが存在しない場合は404を返す
+    unless org = Organization.find_by(directory: params[:org_dir])
+      render_404
+    end
   end
 end

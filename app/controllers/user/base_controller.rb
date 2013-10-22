@@ -4,10 +4,16 @@ class User::BaseController < ApplicationController
   private
 
   def authenticate_user!
-    unless authorized?
+    if authorized?
+    # ログインしているユーザーとリクエストしたorg_dirが一致しない場合は404を返す
+      unless current_user.organization.directory == params[:org_dir]
+        render_404
+      end
+    else # 認証されていない場合　ログインページへリダイレクト
       store_location
       redirect_to login_path
     end
+
   end
 
   def authorized?

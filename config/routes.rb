@@ -1,4 +1,5 @@
 Fly::Application.routes.draw do
+  get '/', to: 'errors#routing' # rootへのaccessは404とする
   scope '/admin/:org_dir', module: :admin do # 管理画面
     get 'login', to: 'sessions#new', as: 'admin_login'
     get 'logout', to: 'sessions#destroy', as: 'admin_logout'
