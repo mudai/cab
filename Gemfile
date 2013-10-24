@@ -38,13 +38,18 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Use Capistrano for deployment
-gem 'capistrano', group: :development
+group :development do
+  gem 'spring' # これを新しく追加
+  gem 'capistrano'
+end
 
 group :development, :test do
   gem 'debugger'
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'factory_girl_rails'
-  gem 'spring' # これを新しく追加
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'poltergeist'
 end
