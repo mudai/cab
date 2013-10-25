@@ -47,6 +47,7 @@ group :development, :test do
   gem 'debugger'
   gem 'rspec-rails'
   gem 'guard-rspec'
+  gem 'guard-spring'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'capybara'

@@ -78,6 +78,9 @@ GEM
     guard-rspec (4.0.3)
       guard (>= 2.1.1)
       rspec (~> 2.14)
+    guard-spring (0.0.4)
+      guard
+      spring
     hike (1.2.3)
     i18n (0.6.5)
     jbuilder (1.5.2)
@@ -211,6 +214,7 @@ DEPENDENCIES
   debugger
   factory_girl_rails
   guard-rspec
+  guard-spring
   jbuilder (~> 1.2)
   jquery-rails
   launchy
