@@ -67,9 +67,30 @@ describe "ログイン" do
 end
 
 describe "ログアウト" do
-  xit "既にログインしている場合ログアウトできること"
-  xit "既にログアウトしている場合、ログアウトしてもエラーとならないこと"
-  xit "ログアウト"
+  before do
+    @org = FactoryGirl.create(:organization)
+    @user = FactoryGirl.create(:user, organization: @org)
+  end
+  context "既にログインしている場合" do
+    before do
+      visit '/sample_dir'
+      fill_in 'authentication_form_login_id', with: 'test'
+      fill_in 'authentication_form_password', with: 'test'
+      click_button 'ログイン'
+      current_path.should == '/sample_dir'
+      page.should have_content("Logged in!")
+    end
+    it "ログアウトできること" do
+      visit '/sample_dir/logout'
+      page.should have_content("Logout Success")
+    end
+  end
+  context "ログインしていない場合" do
+    it "ログアウト処理を行ってもエラーとならないこと" do
+      visit '/sample_dir/logout'
+      page.should have_content("Logout Success")
+    end
+  end
 end
 
 describe "SSO" do
