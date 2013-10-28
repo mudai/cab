@@ -10,8 +10,12 @@ class User::BaseController < ApplicationController
         render_404
       end
     else # 認証されていない場合　ログインページへリダイレクト
-      store_location
-      redirect_to login_path
+      if current_org.present? # 対象のページが存在する場合はセッションをクリアしログインページへリダイレクト
+        store_location
+        redirect_to login_path
+      else # 存在しない場合は404を返す
+        render_404
+      end
     end
 
   end
