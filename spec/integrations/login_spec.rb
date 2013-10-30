@@ -37,7 +37,15 @@ describe "ログイン" do
       page.should have_content("Login_id or Password is invalid")
     end
 
-    xit "ログインしたらログイン履歴テーブルにログイン履歴がinsertされること" 
+    it "ログインしたらログイン履歴テーブルにログイン履歴がinsertされること" do
+      -> {
+        visit '/sample_dir'
+        fill_in 'authentication_form_login_id', with: 'test'
+        fill_in 'authentication_form_password', with: 'test'
+        click_button 'ログイン'
+        current_path.should == '/sample_dir'
+      }.should change(LoginHistory, :count).by(1)
+    end
 
     it "URL直指定の場合はログイン画面を後に指定のURLに遷移すること" do
       visit '/sample_dir/account/edit'
@@ -91,8 +99,4 @@ describe "ログアウト" do
       page.should have_content("Logout Success")
     end
   end
-end
-
-describe "SSO" do
-  xit "仕様を見当すること、そもそも必要ないかもしれない"
 end
