@@ -10,6 +10,8 @@ Fly::Application.routes.draw do
     get 'login', to: 'sessions#login', as: 'login'
     post 'login_process', to: 'sessions#login_process', as: 'login_process'
     get 'logout', to: 'sessions#logout', as: 'logout'
+    get 'signup', to: 'registrations#new', as: 'signup'
+    
     resource :account, only: [:edit, :update]
   end
   # The priority is based upon order of creation: first created -> highest priority.
