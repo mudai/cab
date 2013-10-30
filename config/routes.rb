@@ -10,7 +10,8 @@ Fly::Application.routes.draw do
     get 'login', to: 'sessions#login', as: 'login'
     post 'login_process', to: 'sessions#login_process', as: 'login_process'
     get 'logout', to: 'sessions#logout', as: 'logout'
-    get 'signup', to: 'registrations#new', as: 'signup'
+    get 'signup', to: 'registrations#signup', as: 'signup'
+    get 'signup_process', to: 'registrations#process', as: 'signup_process'
     
     resource :account, only: [:edit, :update]
   end
