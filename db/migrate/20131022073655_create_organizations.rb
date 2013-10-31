@@ -3,7 +3,7 @@ class CreateOrganizations < ActiveRecord::Migration
     create_table :organizations do |t|
       t.string :name # 表示用名称
       t.string :full_name # 正式名称
-      t.string :directory
+      t.string :host
       t.timestamps
     end
   end

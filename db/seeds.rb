@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-org = Organization.new(name: "HCC", full_name: "HCC健康保健組合", directory: "hcc")
+org = Organization.new(name: "HCC", full_name: "HCC健康保健組合", host: "localhost")
 org.save
 
 user = org.users.new

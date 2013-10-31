@@ -2,7 +2,7 @@
 #
 class User::SessionsController < User::BaseController
   skip_before_action :authenticate_user!, only: [:login, :login_process, :logout]
-  before_action :org_dir_check!, only: :login
+  before_action :host_check!, only: :login
 
   def login
     clear_login_session # 既にログインしていた場合はログアウトさせる
@@ -36,8 +36,8 @@ class User::SessionsController < User::BaseController
     cookies.delete(:secure_user_id)
   end
 
-  def org_dir_check! # URLが存在しない場合は404を返す
-    unless org = Organization.find_by(directory: params[:org_dir])
+  def host_check! # URLが存在しない場合は404を返す TODO: このコード自体がいらないかもしれない
+    unless org = Organization.find_by(host: request.host)
       render_404
     end
   end
