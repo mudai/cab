@@ -5,8 +5,7 @@ class User::BaseController < ApplicationController
 
   def authenticate_user!
     if authorized?
-    # ログインしているユーザーとリクエストしたorg_dirが一致しない場合は404を返す
-      unless current_user.organization.directory == params[:org_dir]
+      unless current_user.organization.host == request.host # 基本くることは無いが一応エラーハンドリング
         render_404
       end
     else # 認証されていない場合　ログインページへリダイレクト
@@ -36,7 +35,7 @@ class User::BaseController < ApplicationController
   helper_method :current_user
 
   def current_org
-    @org ||= Organization.find_by(directory: params[:org_dir])
+    @org ||= Organization.find_by(host: request.host)
   end
   helper_method :current_org
 end
