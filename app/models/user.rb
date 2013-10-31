@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   has_many :login_histories
   has_many :login_id_histories
   has_many :password_histories
+  has_one :user_profile
 
-  validates_presence_of :login_id
-  validates_uniqueness_of :login_id # TODO: scope
-  validates_confirmation_of :password
+  validates :login_id, presence: true
+  validates :login_id, uniqueness: {:scope => :organization_id}
+  validates :password, confirmation: true
 
   has_secure_password
 end

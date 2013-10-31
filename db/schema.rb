@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022081008) do
+ActiveRecord::Schema.define(version: 20131030152958) do
 
   create_table "login_histories", force: true do |t|
     t.integer  "organization_id"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20131022081008) do
   end
 
   add_index "password_histories", ["organization_id", "user_id"], name: "index_password_histories_on_organization_id_and_user_id"
+
+  create_table "user_profiles", force: true do |t|
+    t.integer  "user_id"
+    t.string   "nickname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_profiles", ["user_id"], name: "index_user_profiles_on_user_id"
 
   create_table "users", force: true do |t|
     t.integer  "organization_id"
