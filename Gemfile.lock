@@ -42,6 +42,8 @@ GEM
       xpath (~> 2.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
+    chanko (2.0.1)
+      rails (>= 3.0.10)
     cliver (0.2.2)
     coderay (1.0.9)
     coffee-rails (4.0.1)
@@ -209,6 +211,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   capistrano
   capybara
+  chanko
   coffee-rails (~> 4.0.0)
   database_cleaner
   debugger

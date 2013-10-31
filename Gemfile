@@ -38,6 +38,9 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# 限定公開制御
+gem "chanko"
+
 group :development do
   gem 'spring' # これを新しく追加
   gem 'capistrano'
