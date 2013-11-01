@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :organization do
     name 'name'
     full_name 'full_name'
-    directory 'sample_dir'
+    host 'www.qupio.com'
   end
 end

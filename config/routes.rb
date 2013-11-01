@@ -10,6 +10,7 @@ Fly::Application.routes.draw do
     
   resource :account, only: [:edit, :update]
   end
+  get '*a', to: 'errors#routing'
 
   #scope '/admin/:org_dir', module: :admin do # 管理画面
   #  root to: 'home#index', as: :admin_root
