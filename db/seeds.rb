@@ -14,3 +14,12 @@ user.login_id = "test"
 user.password = "test"
 user.password_confirmation = "test"
 user.save
+
+org = Organization.new(name: "HCC2", full_name: "HCC2健康保健組合", host: "localhost2")
+org.save
+
+user = org.users.new
+user.login_id = "test2"
+user.password = "test2"
+user.password_confirmation = "test2"
+user.save

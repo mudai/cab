@@ -1,20 +1,21 @@
 Fly::Application.routes.draw do
-  get '/', to: 'errors#routing' # rootへのaccessは404とする
-  scope '/admin/:org_dir', module: :admin do # 管理画面
-    root to: 'home#index', as: :admin_root
-    get 'login', to: 'sessions#new', as: 'admin_login'
-    get 'logout', to: 'sessions#destroy', as: 'admin_logout'
-  end
-  scope ":org_dir", module: :user do # ユーザー画面
-    root to: "home#index"
-    get 'login', to: 'sessions#login', as: 'login'
-    post 'login_process', to: 'sessions#login_process', as: 'login_process'
-    get 'logout', to: 'sessions#logout', as: 'logout'
-    get 'signup', to: 'registrations#signup', as: 'signup'
-    get 'signup_process', to: 'registrations#process', as: 'signup_process'
+  scope module: :user do
+  root to: "home#index"
+
+  get 'login', to: 'sessions#new', as: 'login'
+  post 'login_process', to: 'sessions#create', as: 'login_process'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'signup', to: 'registrations#new', as: 'signup'
+  post 'signup_process', to: 'registrations#create', as: 'signup_process'
     
-    resource :account, only: [:edit, :update]
+  resource :account, only: [:edit, :update]
   end
+
+  #scope '/admin/:org_dir', module: :admin do # 管理画面
+  #  root to: 'home#index', as: :admin_root
+  #  get 'login', to: 'sessions#new', as: 'admin_login'
+  #  get 'logout', to: 'sessions#destroy', as: 'admin_logout'
+  #end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

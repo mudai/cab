@@ -14,19 +14,19 @@ class AuthenticationForm
   def initialize(request, params = {})
     self.request = request
 
-    self.host = request.host
     self.login_id = params[:login_id]
     self.password = params[:password]
   end
 
   # ログインボタンを押されたときの処理
   def submit
-    auth = AuthenticationService.new(host, login_id, password)
+    # 団体ごとに認証パラメータが違う場合は、実装をコマンドパターンとかにする
+    auth = AuthenticationService.new(request.host, login_id, password)
 
     # org_dir, login_id, passwordの入力チェック, 認証可能かどうか
     if valid? && auth.authenticate?
       @user = auth.user
-      auth.after_authenticate!(request) # これはrequestオブジェクトでは無くちゃんとパラメータで値を渡す
+      auth.after_authenticate!(request) # これはrequestオブジェクトでは無くちゃんとパラメータで値を渡す? TODO
       true
     else # 入力チェックエラーの場合は一律のエラーメッセージをコントローラー側で出す
       false

@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20131031111253) do
   create_table "organizations", force: true do |t|
     t.string   "name"
     t.string   "full_name"
-    t.string   "directory"
+    t.string   "host"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

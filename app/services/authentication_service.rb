@@ -1,7 +1,7 @@
 class AuthenticationService
   # 認証処理を担うクラス
-  def initialize(org, login_id, password)
-    @org, @login_id, @password = org, login_id, password
+  def initialize(host, login_id, password)
+    @host, @login_id, @password = host, login_id, password
   end
 
   # 認証が可能なユーザーを取得
@@ -39,8 +39,9 @@ class AuthenticationService
   private
 
   def user_with_password
-    return if @org.nil? # 存在しないdirectoryのチェック
-    user = @org.users.find_by(login_id: @login_id)
-    user && user.authenticate(@password) # user.rbモデルにhas_secure_passwordをつけておく
+    if org = Organization.find_by(host: @host)
+      user = org.users.find_by(login_id: @login_id)
+      user && user.authenticate(@password) # user.rbモデルにhas_secure_passwordをつけておく
+    end
   end
 end

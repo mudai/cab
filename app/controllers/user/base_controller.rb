@@ -5,11 +5,12 @@ class User::BaseController < ApplicationController
 
   def authenticate_user!
     if authorized?
+      # ホストが変わるとcookieやセッションが変わるはずなので
       unless current_user.organization.host == request.host # 基本くることは無いが一応エラーハンドリング
         render_404
       end
     else # 認証されていない場合　ログインページへリダイレクト
-      if current_org.present? # 対象のページが存在する場合はセッションをクリアしログインページへリダイレクト
+      if valid_host? # 対象のページが存在する場合はセッションをクリアしログインページへリダイレクト
         store_location
         redirect_to login_path
       else # 存在しない場合は404を返す
@@ -17,6 +18,10 @@ class User::BaseController < ApplicationController
       end
     end
 
+  end
+
+  def valid_host?
+    Organization.exists?(host: request.host)
   end
 
   def authorized?

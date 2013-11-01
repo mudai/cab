@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 #
 class User::SessionsController < User::BaseController
-  skip_before_action :authenticate_user!, only: [:login, :login_process, :logout]
-  before_action :host_check!, only: :login
 
-  def login
-    clear_login_session # 既にログインしていた場合はログアウトさせる
-    @auth_form = AuthenticationForm.new(current_org, request)
+  skip_before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :host_check!, only: [:new, :create, :destroy]
+
+  def new
+    redirect_to root_path, notice: "already logged" if authorized?
+    clear_login_session # ゴミセッションをクリア
+    @auth_form = AuthenticationForm.new(request)
   end
 
-  def login_process
-    @auth_form = AuthenticationForm.new(current_org, request, login_params)
+  def create
+    @auth_form = AuthenticationForm.new(request, login_params)
     if @auth_form.submit
       session[:user_id] = @auth_form.user.id
       cookies.signed[:secure_user_id] = {secure: true, value: "fly_secure_key_#{@auth_form.user.id}"}
@@ -21,7 +23,7 @@ class User::SessionsController < User::BaseController
     end
   end
 
-  def logout
+  def destroy
     clear_login_session
     redirect_to login_path, notice: "Logout Success"
   end
@@ -37,8 +39,6 @@ class User::SessionsController < User::BaseController
   end
 
   def host_check! # URLが存在しない場合は404を返す TODO: このコード自体がいらないかもしれない
-    unless org = Organization.find_by(host: request.host)
-      render_404
-    end
+    render_404 unless valid_host?
   end
 end
