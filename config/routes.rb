@@ -1,14 +1,14 @@
 Fly::Application.routes.draw do
   scope module: :user do
-  root to: "home#index"
+    root to: "home#index"
 
-  get 'login', to: 'sessions#new', as: 'login'
-  post 'login_process', to: 'sessions#create', as: 'login_process'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
-  get 'signup', to: 'registrations#new', as: 'signup'
-  post 'signup_process', to: 'registrations#create', as: 'signup_process'
-    
-  resource :account, only: [:edit, :update]
+    get 'login', to: 'sessions#new', as: 'login'
+    post 'login_process', to: 'sessions#create', as: 'login_process'
+    get 'logout', to: 'sessions#destroy', as: 'logout'
+    get 'signup', to: 'registrations#new', as: 'signup'
+    post 'signup_process', to: 'registrations#create', as: 'signup_process'
+
+    resource :account, only: [:edit, :update]
   end
   get '*a', to: 'errors#routing'
 

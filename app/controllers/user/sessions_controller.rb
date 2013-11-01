@@ -36,8 +36,4 @@ class User::SessionsController < User::BaseController
     session[:user_id] = nil
     cookies.delete(:secure_user_id)
   end
-
-  def host_check! # URLが存在しない場合は404を返す TODO: このコード自体がいらないかもしれない
-    render_404 unless valid_host?
-  end
 end

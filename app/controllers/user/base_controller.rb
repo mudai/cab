@@ -20,6 +20,10 @@ class User::BaseController < ApplicationController
 
   end
 
+  def host_check! # URLが存在しない場合は404を返す TODO: このコード自体がいらないかもしれない
+    render_404 unless valid_host?
+  end
+
   def valid_host?
     Organization.exists?(host: request.host)
   end
