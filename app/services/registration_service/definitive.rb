@@ -1,0 +1,2 @@
+class RegistrationService::Definitive
+end

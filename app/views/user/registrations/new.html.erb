@@ -1,0 +1,24 @@
+<p>ユーザー登録</p>
+<div class="registration">
+  <%= form_for @regist_form, url: signup_process_path do |f| %>
+    <label>記号</label>
+    <%= f.text_field :code%><br>
+    <label>番号</label>
+    <%= f.text_field :number%><br>
+    <label>カナ性</label>
+    <%= f.text_field :family_name_kana%><br>
+    <label>カナ名</label>
+    <%= f.text_field :first_name_kana%><br>
+    <label>ログインID</label>
+    <%= f.text_field :login_id%><br>
+    <label>パスワード</label>
+    <%= f.password_field :password %><br>
+    <label>パスワード(確認)</label>
+    <%= f.password_field :password_confirmation %><br>
+    <label>メールアドレス</label>
+    <%= f.password_field :email %><br>
+    <label>メールアドレス(確認)</label>
+    <%= f.password_field :email_confirmation %><br>
+    <%= f.submit "仮登録" %>
+  <% end %>
+</div>

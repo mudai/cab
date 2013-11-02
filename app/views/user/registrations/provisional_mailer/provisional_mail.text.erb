@@ -1,0 +1,21 @@
+<%= @attributes[:nickname] %>様
+
+下記の情報で登録の申し込みを承りました。
+
+保険証記号: <%= @attributes[:code] %>
+保険証番号: <%= @attributes[:number] %>
+カナ(姓): <%= @attributes[:family_name_kana] %>
+カナ(名): <%= @attributes[:first_name_kana] %>
+
+ログインID: <%= @attributes[:login_id] %>
+パスワード: 登録画面にご入力いただいたもの
+
+ニックネーム: <%= @attributes[:nickname] %>
+メールアドレス: <%= @attributes[:email] %>
+
+登録を完了させるには下記のURLをクリックし登録を完了させてください。
+
+<%= signup_token_url(token: @attributes[:token])%>
+
+※ このメールは送信専用のメールアドレスから配信されています。
+返信いただいてもお答えできませんのでご了承ください。

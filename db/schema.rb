@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 20131102004247) do
 
   add_index "login_id_histories", ["organization_id", "user_id"], name: "index_login_id_histories_on_organization_id_and_user_id"
 
+  create_table "mail_templates", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "code"
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "onetime_tokens", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -81,14 +90,8 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.string   "first_name_kana"
     t.string   "code"
     t.string   "number"
+    t.date     "birthday"
     t.datetime "associated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "templates", force: true do |t|
-    t.integer  "organization_id"
-    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :login_id_histories
   has_many :password_histories
   has_one :user_profile
+  has_one :subscriber_information
 
   validates :login_id, presence: true
   validates :login_id, uniqueness: {:scope => :organization_id}

@@ -1,2 +1,0 @@
-class HtmlTemplate < Template
-end

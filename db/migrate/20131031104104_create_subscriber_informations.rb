@@ -10,6 +10,7 @@ class CreateSubscriberInformations < ActiveRecord::Migration
       t.string :first_name_kana
       t.string :code # 記号
       t.string :number # 番号
+      t.date :birthday # 生年月日
       t.datetime :associated_at # ひも付け日時
       t.timestamps
     end

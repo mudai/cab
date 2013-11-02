@@ -2,24 +2,21 @@
 #
 class User::RegistrationsController < User::BaseController
 
-  skip_before_action :authenticate_user!, only: [:new, :create]
-  before_action :host_check!, only: [:new, :create]
+  skip_before_action :authenticate_user!
+  before_action :host_check!
 
   # /signup
   def new
-    @regst_form = RegistrationForm.new(request)
+    @regist_form = RegistrationForm.new(request.host)
   end
 
   # /signup_process
   def create
-    @regist_form = RegistrationForm.new(request, login_params)
+    @regist_form = RegistrationForm.new(request.host, regist_params)
     if @regist_form.submit
-      session[:user_id] = @auth_form.user.id
-      cookies.signed[:secure_user_id] = {secure: true, value: "fly_secure_key_#{@auth_form.user.id}"}
-      redirect_to session.delete(:return_to) || root_path, notice: "Logged in!"
+      redirect_to signup_provisional_path
     else
-      flash.now.alert = "Login_id or Password is invalid"
-      render :new
+      render :new # 項目のエラー
     end
   end
 
@@ -42,6 +39,7 @@ class User::RegistrationsController < User::BaseController
 
   private
   def regist_params
-    params.require(:registration_form).permit(:login_id, :password, :password_confirmation, :email, :nickname)
+    params.require(:registration_form).permit(:code, :number, :family_name_kana, :first_name_kana,
+    :birthday, :login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation)
   end
 end
