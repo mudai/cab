@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031111253) do
+ActiveRecord::Schema.define(version: 20131102004247) do
 
   create_table "login_histories", force: true do |t|
     t.integer  "organization_id"
@@ -67,7 +67,28 @@ ActiveRecord::Schema.define(version: 20131031111253) do
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
 
+  create_table "provisional_users", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "subscriber_informations", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "user_id"
+    t.string   "family_name"
+    t.string   "first_name"
+    t.string   "family_name_kana"
+    t.string   "first_name_kana"
+    t.string   "code"
+    t.string   "number"
+    t.datetime "associated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "templates", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
