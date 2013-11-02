@@ -23,8 +23,21 @@ class User::RegistrationsController < User::BaseController
     end
   end
 
-  # /provisional_signup 仮登録完了ページ
-  def provisional_signup
+  # /signup_provisional 仮登録完了ページ
+  def signup_provisional
+  end
+
+  # /signup_token/:token 認証トークン確認ページ
+  def signup_token
+    # エラーの場合はrender :token_error
+  end
+
+  # トークンエラー
+  def token_error
+  end
+
+  # /signup_confirmed 完了ページ
+  def signup_confirmed
   end
 
   private

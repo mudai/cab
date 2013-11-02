@@ -7,6 +7,9 @@ Fly::Application.routes.draw do
     get 'logout', to: 'sessions#destroy', as: 'logout'
     get 'signup', to: 'registrations#new', as: 'signup'
     post 'signup_process', to: 'registrations#create', as: 'signup_process'
+    get 'signup_provisional', to: 'registrations#signup_provisional', as: 'signup_provisional'
+    get 'signup_token/:token', to: 'registrations#signup_token', as: 'signup_token'
+    get 'signup_confirmed', to: 'registrations#signup_confirmed', as: 'signup_confirmed'
 
     resource :account, only: [:edit, :update]
   end
