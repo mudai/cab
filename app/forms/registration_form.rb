@@ -11,25 +11,8 @@ class RegistrationForm
 
   attr_accessor :host, :code, :number, :family_name_kana, :first_name_kana,
     :birthday, :login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation
-
-  def self.keys
-    # Date, DateTime, Time以外は不要
-    # multi_parameterをキャストするために必要
-    # TODO: classマクロにそのうち変更する
-    {
-      host: String,
-      code: String,
-      number: String,
-      family_name_kana: String,
-      first_name_kana: String,
-      birthday: Date,
-      login_id: String,
-      password: String,
-      password_confirmation: String,
-      nickname: String,
-      email: String,
-      email_confirmation: String
-    }
+  def self.form_multi_parameter_attributes
+    { birthday: Date } # formからbirthday(1i)とか来ても指定の型でパースする
   end
 
   def initialize(host, params = {})

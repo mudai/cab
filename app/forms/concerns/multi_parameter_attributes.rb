@@ -31,7 +31,7 @@ module MultiParameterAttributes
       values = values_with_empty_parameters.reject(&:nil?)
 
       if values.any?
-        klass = self.class.keys[name.to_sym] # respond toとかでraiseさせた方がよいかもしれない
+        klass = self.class.form_multi_parameter_attributes[name.to_sym]
         raise ArgumentError, "Unknown klass #{name}" if klass.nil?
         
         value = if Time == klass
