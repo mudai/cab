@@ -9,6 +9,13 @@
 org = Organization.new(name: "HCC", full_name: "HCC健康保健組合", host: "localhost")
 org.save
 
+org.subscriber_informations.create(
+  user_id: nil, family_name: "牟田", first_name: "孝明",
+  family_name_kana: "ムタ", first_name_kana: "タカアキ",
+  code: "muta", number: "takaaki", birthday: Date.new(1984,8,17)
+)
+
+
 user = org.users.new
 user.login_id = "test"
 user.password = "test"

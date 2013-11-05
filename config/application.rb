@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'nkf'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -21,5 +22,6 @@ module Fly
     config.i18n.default_locale = 'ja'
 
     config.autoload_paths += %W(#{config.root}/lib/validators)
+    config.autoload_paths += %W(#{config.root}/app/forms/concerns)
   end
 end

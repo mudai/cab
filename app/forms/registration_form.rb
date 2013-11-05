@@ -2,6 +2,7 @@
 #
 class RegistrationForm
   include ActiveModel::Model
+  include MultiParameterAttributes
 
   # TODO: バリデーション
   validates_with SubscriptionValidator # code, number, birthday, family_name_kana, first_name_kana これはこのバリデータに任せる
@@ -11,15 +12,29 @@ class RegistrationForm
   attr_accessor :host, :code, :number, :family_name_kana, :first_name_kana,
     :birthday, :login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation
 
-  def persisted?
-    false
+  def self.keys
+    # Date, DateTime, Time以外は不要
+    # multi_parameterをキャストするために必要
+    # TODO: classマクロにそのうち変更する
+    {
+      host: String,
+      code: String,
+      number: String,
+      family_name_kana: String,
+      first_name_kana: String,
+      birthday: Date,
+      login_id: String,
+      password: String,
+      password_confirmation: String,
+      nickname: String,
+      email: String,
+      email_confirmation: String
+    }
   end
 
   def initialize(host, params = {})
     self.host = host
-    params.try(:each) do |name, value|
-      send("#{name}=", value) rescue nil
-    end
+    self.attributes = params
   end
 
   def attributes
