@@ -7,12 +7,12 @@ class User::RegistrationsController < User::BaseController
 
   # /signup
   def new
-    @regist_form = RegistrationForm.new(request.host)
+    @regist_form = RegistrationForm.new
   end
 
   # /signup_process
   def create
-    @regist_form = RegistrationForm.new(request.host, regist_params)
+    @regist_form = RegistrationForm.new(regist_params.merge(host: request.host))
     if @regist_form.submit
       redirect_to signup_provisional_path
     else
