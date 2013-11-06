@@ -88,7 +88,7 @@ describe "ユーザー登録" do
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
-        last_email.body.should include("token") # tokenとなっていること
+        last_email.body.should include("aaaa") # tokenとなっていること
       end
       xit "正しい値を入力した場合は仮登録テーブルへレコードが追加されること"
     end

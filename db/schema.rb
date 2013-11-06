@@ -44,9 +44,17 @@ ActiveRecord::Schema.define(version: 20131102004247) do
   end
 
   create_table "onetime_tokens", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "user_id"
+    t.boolean  "status"
+    t.string   "token_type"
+    t.string   "token"
+    t.datetime "expired_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "onetime_tokens", ["organization_id", "token"], name: "index_onetime_tokens_on_organization_id_and_token"
 
   create_table "organizations", force: true do |t|
     t.string   "name"

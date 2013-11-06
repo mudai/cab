@@ -5,6 +5,7 @@ class Organization < ActiveRecord::Base
   has_many :password_histories 
   has_many :mail_templates
   has_many :subscriber_informations
+  has_many :provisional_users
 
   # hostにはユニーク制約をつける
 end
