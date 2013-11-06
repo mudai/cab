@@ -11,10 +11,7 @@ class RegistrationForm
 
   attr_accessor :host, :code, :number, :family_name_kana, :first_name_kana,
     :birthday, :login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation
-  #form_multi_parameter :birthday, Date #TODO: あとでこんな感じにする
-  def self.form_multi_parameter_attributes
-    { birthday: Date } # formからbirthday(1i)とか来ても指定の型でパースする
-  end
+  form_multi_parameter :birthday, Date
 
   def initialize(params = {})
     self.attributes = params

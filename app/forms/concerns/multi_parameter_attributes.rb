@@ -1,4 +1,17 @@
 module MultiParameterAttributes
+  def self.included(base)
+    base.class_eval do
+      def self.form_multi_parameter(key, klass)
+        @mapping ||= {}
+        @mapping.merge!({key => klass})
+      end
+
+      def self.form_multi_parameters
+        @mapping
+      end
+    end
+  end
+
   def attributes=(attrs)
     multi_parameter_attributes = []
     attrs.each do |name, value|
@@ -31,7 +44,7 @@ module MultiParameterAttributes
       values = values_with_empty_parameters.reject(&:nil?)
 
       if values.any?
-        klass = self.class.form_multi_parameter_attributes[name.to_sym]
+        klass = self.class.form_multi_parameters[name.to_sym]
         raise ArgumentError, "Unknown klass #{name}" if klass.nil?
         
         value = if Time == klass
