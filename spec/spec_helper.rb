@@ -19,6 +19,7 @@ RSpec.configure do |config|
   config.order = 'random'
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
+  config.include MailerMacros
 
   config.before(:all) do
     FactoryGirl.reload # これがないとfactoryの変更が反映されません
@@ -30,6 +31,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    reset_email
     DatabaseCleaner.start
   end
 

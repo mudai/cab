@@ -1,4 +1,5 @@
 class User::Registrations::ProvisionalMailer < ActionMailer::Base
+  default from: 'noreply@qupio.jp'
 
   # テンプレートが無かった場合に利用されるデフォルトの件名
   def default_subject
