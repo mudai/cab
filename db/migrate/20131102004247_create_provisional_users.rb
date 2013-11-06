@@ -12,6 +12,8 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.string :code # 記号
       t.string :number # 番号
       t.date :birthday # 生年月日
+      t.string :login_id
+      t.string :password_digest # 仮登録フローを考えるもうユーザーテーブルでもよいかもしれない
       t.string :email
       t.string :nickname
       t.timestamps
