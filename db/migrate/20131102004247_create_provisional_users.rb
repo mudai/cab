@@ -3,7 +3,7 @@ class CreateProvisionalUsers < ActiveRecord::Migration
     create_table :provisional_users do |t|
       t.integer :organization_id
       t.integer :subscriber_information_id
-      t.integer :onetime_token_id
+      t.integer :onetime_token_id # 最新のtoken_idにupdateする？
       t.string :family_name # 名字
       t.string :first_name # 名前
       t.string :family_name_kana

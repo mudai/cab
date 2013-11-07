@@ -90,6 +90,7 @@ describe "ユーザー登録" do
         click_button '仮登録'
         last_email.body.should include("aaaa") # tokenとなっていること
       end
+      xit "別々のトークンが発行されること最新のtokenだけが有効であること"
       xit "正しい値を入力した場合は仮登録テーブルへレコードが追加されること"
     end
     context "本登録フロー" do
