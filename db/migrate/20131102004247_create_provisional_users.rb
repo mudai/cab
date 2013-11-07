@@ -4,7 +4,6 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.integer :organization_id
       t.integer :subscriber_information_id
       t.integer :onetime_token_id
-      t.boolean :status # true: 仮登録受付, false: 仮登録完了
       t.string :family_name # 名字
       t.string :first_name # 名前
       t.string :family_name_kana
@@ -12,10 +11,7 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.string :code # 記号
       t.string :number # 番号
       t.date :birthday # 生年月日
-      t.string :login_id
-      t.string :password_digest # 仮登録フローを考えるもうユーザーテーブルでもよいかもしれない
-      t.string :email
-      t.string :nickname
+      t.string :email # 一応権限確認時のデータを持っておく
       t.timestamps
     end
 
