@@ -29,7 +29,6 @@ class AuthenticationService
   def authenticate_logging!(now, request)
     # 認証後のログインログ書き込み処理を入れる
     user.login_histories.create!(
-      organization_id: user.organization_id,
       ip_address: request.remote_ip,
       user_agent: request.user_agent,
       logged_in_at: now
