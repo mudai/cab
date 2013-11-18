@@ -2,7 +2,6 @@ class CreateLoginHistories < ActiveRecord::Migration
   def change
     # TODO: パーティショニングする
     create_table :login_histories do |t|
-      t.integer :organization_id
       t.integer :user_id
       t.string :ip_address # リクエスト元IPアドレス
       t.string :user_agent # ユーザーエージェント
@@ -10,6 +9,6 @@ class CreateLoginHistories < ActiveRecord::Migration
       t.timestamps
     end
 
-    # TODO: indexを検討する
+    add_index :login_histories, :user_id
   end
 end

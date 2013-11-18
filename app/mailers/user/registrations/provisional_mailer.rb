@@ -7,11 +7,11 @@ class User::Registrations::ProvisionalMailer < ActionMailer::Base
   end
 
   def provisional_mail(attributes)
-    self.class.default_url_options[:host] = "localhost"
     @attributes = attributes # デフォルトのerbテンプレート用
     # templateが無い場合のデフォルトの文章はuser/registrations/provisional_mailer.text.erbが利用される
 
     org = Organization.find_by(host: attributes[:host])
+    self.class.default_url_options[:host] = org.host
     if org && template = org.mail_templates.find_by(code: "provisional_mail")
       mail(
         to: attributes[:email],
