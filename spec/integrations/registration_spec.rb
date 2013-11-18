@@ -22,10 +22,6 @@ describe "ユーザー登録" do
         select "8", from: "registration_form_birthday_2i"
         select "17", from: "registration_form_birthday_3i"
 
-        fill_in "registration_form_nickname", with: "nickname"
-        fill_in "registration_form_login_id", with: "login_id"
-        fill_in "registration_form_password", with: "password"
-        fill_in "registration_form_password_confirmation", with: "password"
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
@@ -42,10 +38,6 @@ describe "ユーザー登録" do
         select "8", from: "registration_form_birthday_2i"
         select "17", from: "registration_form_birthday_3i"
 
-        fill_in "registration_form_nickname", with: "nickname"
-        fill_in "registration_form_login_id", with: "login_id"
-        fill_in "registration_form_password", with: "password"
-        fill_in "registration_form_password_confirmation", with: "password"
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
@@ -61,10 +53,6 @@ describe "ユーザー登録" do
         select "8", from: "registration_form_birthday_2i"
         select "17", from: "registration_form_birthday_3i"
 
-        fill_in "registration_form_nickname", with: "nickname"
-        fill_in "registration_form_login_id", with: "login_id"
-        fill_in "registration_form_password", with: "password"
-        fill_in "registration_form_password_confirmation", with: "password"
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
@@ -81,10 +69,6 @@ describe "ユーザー登録" do
         select "8", from: "registration_form_birthday_2i"
         select "17", from: "registration_form_birthday_3i"
 
-        fill_in "registration_form_nickname", with: "nickname"
-        fill_in "registration_form_login_id", with: "login_id"
-        fill_in "registration_form_password", with: "password"
-        fill_in "registration_form_password_confirmation", with: "password"
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
