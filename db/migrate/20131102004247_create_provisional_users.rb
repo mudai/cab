@@ -15,7 +15,7 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :provisional_users, [:organization_id, :onetime_token_id]
-    add_index :provisional_users, [:organization_id, :subscriber_information_id]
+    add_index :provisional_users, [:organization_id, :onetime_token_id], name: "index_provisional_users_on_org_id_and_onetime_token_id"
+    add_index :provisional_users, [:organization_id, :subscriber_information_id], name: "index_provisional_users_on_org_id_and_subscriber_info_id"
   end
 end

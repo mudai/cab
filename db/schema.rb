@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(version: 20131102004247) do
 
   create_table "login_histories", force: true do |t|
-    t.integer  "organization_id"
     t.integer  "user_id"
     t.string   "ip_address"
     t.string   "user_agent"
@@ -23,8 +22,9 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.datetime "updated_at"
   end
 
+  add_index "login_histories", ["user_id"], name: "index_login_histories_on_user_id"
+
   create_table "login_id_histories", force: true do |t|
-    t.integer  "organization_id"
     t.integer  "user_id"
     t.string   "before_login_id"
     t.datetime "changed_at"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.datetime "updated_at"
   end
 
-  add_index "login_id_histories", ["organization_id", "user_id"], name: "index_login_id_histories_on_organization_id_and_user_id"
+  add_index "login_id_histories", ["user_id"], name: "index_login_id_histories_on_user_id"
 
   create_table "mail_templates", force: true do |t|
     t.integer  "organization_id"
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20131102004247) do
   end
 
   create_table "password_histories", force: true do |t|
-    t.integer  "organization_id"
     t.integer  "user_id"
     t.string   "before_password_digest"
     t.datetime "changed_at"
@@ -73,7 +72,7 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.datetime "updated_at"
   end
 
-  add_index "password_histories", ["organization_id", "user_id"], name: "index_password_histories_on_organization_id_and_user_id"
+  add_index "password_histories", ["user_id"], name: "index_password_histories_on_user_id"
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -85,9 +84,23 @@ ActiveRecord::Schema.define(version: 20131102004247) do
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
 
   create_table "provisional_users", force: true do |t|
+    t.integer  "organization_id"
+    t.integer  "subscriber_information_id"
+    t.integer  "onetime_token_id"
+    t.string   "family_name"
+    t.string   "first_name"
+    t.string   "family_name_kana"
+    t.string   "first_name_kana"
+    t.string   "code"
+    t.string   "number"
+    t.date     "birthday"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "provisional_users", ["organization_id", "onetime_token_id"], name: "index_provisional_users_on_org_id_and_onetime_token_id"
+  add_index "provisional_users", ["organization_id", "subscriber_information_id"], name: "index_provisional_users_on_org_id_and_subscriber_info_id"
 
   create_table "subscriber_informations", force: true do |t|
     t.integer  "organization_id"
