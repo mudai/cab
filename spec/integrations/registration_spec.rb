@@ -60,6 +60,7 @@ describe "ユーザー登録" do
       end
 
       it "正しい値を入力し送信されたメールは認証用token_urlが記載されていること" do
+        # lamdaで変更データを見て確認すること
         visit "http://www.qupio.com/signup"
         fill_in "registration_form_code", with: "muta"
         fill_in "registration_form_number", with: "takaaki"
