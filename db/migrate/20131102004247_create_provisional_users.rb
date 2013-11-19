@@ -4,6 +4,7 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.integer :organization_id
       t.integer :subscriber_information_id
       t.integer :onetime_token_id # 最新のtoken_idにupdateして過去のtokenは無効にする
+      t.boolean :status # 仮登録状態かどうか
       t.string :family_name # 名字
       t.string :first_name # 名前
       t.string :family_name_kana

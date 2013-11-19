@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :mail_templates
   has_many :subscriber_informations
   has_many :provisional_users
+  has_many :onetime_tokens
 
   # hostにはユニーク制約をつける
 end

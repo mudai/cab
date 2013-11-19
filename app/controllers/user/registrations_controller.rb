@@ -39,7 +39,7 @@ class User::RegistrationsController < User::BaseController
 
   private
   def regist_params
-    params.require(:registration_form).permit(:code, :number, :family_name_kana, :first_name_kana,
+    params.require(:registration_form).permit(:code, :number, :family_name, :first_name, :family_name_kana, :first_name_kana,
     :birthday, :login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation)
   end
 end

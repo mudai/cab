@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.integer  "organization_id"
     t.integer  "subscriber_information_id"
     t.integer  "onetime_token_id"
+    t.boolean  "status"
     t.string   "family_name"
     t.string   "first_name"
     t.string   "family_name_kana"
