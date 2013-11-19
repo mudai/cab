@@ -55,13 +55,13 @@ describe "ログイン" do
       end
 
       it "ログインしたらログイン履歴テーブルにログイン履歴がinsertされること" do
-        -> {
+        expect {
           visit 'http://www.qupio.com/login'
           fill_in 'authentication_form_login_id', with: 'test'
           fill_in 'authentication_form_password', with: 'test'
           click_button 'ログイン'
           current_path.should == '/'
-        }.should change(LoginHistory, :count).by(1)
+        }.to change(LoginHistory, :count).by(1)
       end
 
       it "URL直指定の場合はログイン画面を後に指定のURLに遷移すること" do

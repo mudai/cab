@@ -60,7 +60,6 @@ describe "ユーザー登録" do
       end
 
       it "正しい値を入力し送信されたメールは認証用token_urlが記載されていること" do
-        # lamdaで変更データを見て確認すること
         visit "http://www.qupio.com/signup"
         fill_in "registration_form_code", with: "muta"
         fill_in "registration_form_number", with: "takaaki"
@@ -73,6 +72,7 @@ describe "ユーザー登録" do
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
+        #}.should change()
         last_email.body.should include("http://www.qupio.com/signup_token/")
       end
       xit "別々のトークンが発行されること最新のtokenだけが有効であること"
