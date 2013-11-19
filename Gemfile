@@ -41,6 +41,9 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # 限定公開制御
 gem "chanko"
 
+# メール文字化け対策
+gem 'jpmobile'
+
 group :development do
   gem 'spring' # これを新しく追加
   gem 'capistrano'

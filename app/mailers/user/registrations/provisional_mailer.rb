@@ -1,4 +1,4 @@
-class User::Registrations::ProvisionalMailer < ActionMailer::Base
+class User::Registrations::ProvisionalMailer < Jpmobile::Mailer::Base
   default from: 'noreply@qupio.jp'
 
   # テンプレートが無かった場合に利用されるデフォルトの件名
