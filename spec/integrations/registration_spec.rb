@@ -59,7 +59,7 @@ describe "ユーザー登録" do
         last_email.to.should include("muta.takaaki@hcc-jp.com")
       end
 
-      xit "正しい値を入力し送信されたメールは認証用tokenが記載されていること" do
+      it "正しい値を入力し送信されたメールは認証用token_urlが記載されていること" do
         visit "http://www.qupio.com/signup"
         fill_in "registration_form_code", with: "muta"
         fill_in "registration_form_number", with: "takaaki"
@@ -72,7 +72,7 @@ describe "ユーザー登録" do
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
         click_button '仮登録'
-        last_email.body.should include("aaaa") # tokenとなっていること
+        last_email.body.should include("http://www.qupio.com/signup_token/")
       end
       xit "別々のトークンが発行されること最新のtokenだけが有効であること"
       xit "正しい値を入力した場合は仮登録テーブルへレコードが追加されること"
