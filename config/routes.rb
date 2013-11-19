@@ -13,6 +13,11 @@ Fly::Application.routes.draw do
 
     resource :account, only: [:edit, :update]
   end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   get '*a', to: 'errors#routing'
 
   #scope '/admin/:org_dir', module: :admin do # 管理画面

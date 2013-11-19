@@ -44,6 +44,7 @@ gem "chanko"
 group :development do
   gem 'spring' # これを新しく追加
   gem 'capistrano'
+  gem 'letter_opener_web' # メール送信まわりの確認
 end
 
 group :development, :test do
