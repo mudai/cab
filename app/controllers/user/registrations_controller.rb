@@ -29,7 +29,11 @@ class User::RegistrationsController < User::BaseController
     # エラーの場合はrender :token_error
   end
 
-  # トークンエラー
+  # /signup_token_process
+  def signup_token_process
+  end
+
+  # トークンエラー redirectする
   def token_error
   end
 

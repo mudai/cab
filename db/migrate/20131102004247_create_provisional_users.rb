@@ -13,10 +13,13 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.string :number # 番号
       t.date :birthday # 生年月日
       t.string :email # 一応権限確認時のデータを持っておく
+      t.string :login_id # login_idチェックのときに userテーブルのlogin_idと申し込み中のlogin_idをチェックする
+      t.string :digest_password # ユーザーテーブル作成時にcopyする
+      t.string :nickname # ニックネーム
       t.timestamps
     end
 
-    add_index :provisional_users, [:organization_id, :onetime_token_id], name: "index_provisional_users_on_org_id_and_onetime_token_id"
-    add_index :provisional_users, [:organization_id, :subscriber_information_id], name: "index_provisional_users_on_org_id_and_subscriber_info_id"
+    add_index :provisional_users, [:organization_id, :onetime_token_id], name: "index_prov_users_on_org_id_and_onetime_token_id"
+    add_index :provisional_users, [:organization_id, :subscriber_information_id], name: "index_prov_users_on_org_id_and_subscriber_info_id"
   end
 end
