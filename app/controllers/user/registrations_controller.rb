@@ -36,12 +36,12 @@ class User::RegistrationsController < User::BaseController
 
       redirect_to signup_confimed_path
     else
-      redirect_to token_error_path
+      redirect_to signup_token_error_path
     end
   end
 
   # トークンエラー redirectする
-  def token_error
+  def signup_token_error
     # トークンが不正か、無効化されています。
     # 既存を参考にする
   end
