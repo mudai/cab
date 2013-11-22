@@ -96,12 +96,15 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.string   "number"
     t.date     "birthday"
     t.string   "email"
+    t.string   "login_id"
+    t.string   "password_digest"
+    t.string   "nickname"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "provisional_users", ["organization_id", "onetime_token_id"], name: "index_provisional_users_on_org_id_and_onetime_token_id"
-  add_index "provisional_users", ["organization_id", "subscriber_information_id"], name: "index_provisional_users_on_org_id_and_subscriber_info_id"
+  add_index "provisional_users", ["organization_id", "onetime_token_id"], name: "index_prov_users_on_org_id_and_onetime_token_id"
+  add_index "provisional_users", ["organization_id", "subscriber_information_id"], name: "index_prov_users_on_org_id_and_subscriber_info_id"
 
   create_table "subscriber_informations", force: true do |t|
     t.integer  "organization_id"

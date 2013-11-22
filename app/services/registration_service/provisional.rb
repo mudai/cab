@@ -1,6 +1,6 @@
 class RegistrationService::Provisional
   attr_accessor :host, :code, :number, :family_name, :first_name, :family_name_kana, :first_name_kana,
-    :birthday, :email
+    :birthday, :email, :login_id, :password, :nickname
   attr_reader :signup_token
 
   def initialize(attributes = {}) # TODO: active modelをインクルードして取っ払う？
@@ -21,8 +21,8 @@ class RegistrationService::Provisional
     )
 
     ActiveRecord::Base.transaction do
-      reset_provisional_user(org, info)
-      generate_provisional_user(org, info)
+      reset_provisional_user(org, info) # 他のtokenを無効化
+      generate_provisional_user(org, info) # 新しいtokenの作成
     end
     true
   end
@@ -75,7 +75,11 @@ class RegistrationService::Provisional
       code: code, # 記号
       number: number, # 番号
       birthday: birthday, # 生年月日
-      email: email
+      email: email,
+      login_id: login_id,
+      password: password,
+      password_confirmation: password,
+      nickname: nickname
     )
   end
 end

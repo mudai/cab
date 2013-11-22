@@ -24,6 +24,10 @@ describe "ユーザー登録" do
 
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
         click_button '仮登録'
         current_path.should == "/signup_provisional"
       end
@@ -40,6 +44,10 @@ describe "ユーザー登録" do
 
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
         click_button '仮登録'
         current_path.should == "/signup_process"
       end
@@ -55,6 +63,10 @@ describe "ユーザー登録" do
 
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
         click_button '仮登録'
         last_email.to.should include("muta.takaaki@hcc-jp.com")
       end
@@ -71,6 +83,10 @@ describe "ユーザー登録" do
 
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
         click_button '仮登録'
         
         last_email.body.should include("http://www.qupio.com/signup_token/#{OnetimeToken.last.token}")
@@ -87,6 +103,10 @@ describe "ユーザー登録" do
 
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
         click_button '仮登録'
         token2_obj = OnetimeToken.last
         token2 = token2_obj.token
@@ -103,6 +123,10 @@ describe "ユーザー登録" do
 
         fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
         fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
         click_button '仮登録'
         token1_obj = OnetimeToken.last
         token1 = token1_obj.token
@@ -124,6 +148,10 @@ describe "ユーザー登録" do
 
           fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
           fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+          fill_in "registration_form_login_id", with: "login_id"
+          fill_in "registration_form_password", with: "password"
+          fill_in "registration_form_password_confirmation", with: "password"
+          fill_in "registration_form_nickname", with: "nickname"
           click_button '仮登録'
         }.to change( ProvisionalUser, :count ).from(0).to(1)
       end

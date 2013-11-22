@@ -19,6 +19,14 @@
     <%= f.email_field :email %><br>
     <label>メールアドレス(確認)</label>
     <%= f.email_field :email_confirmation %><br>
+    <label>ログインID</label>
+    <%= f.text_field :login_id %><br>
+    <label>メールアドレス</label>
+    <%= f.password_field :password %><br>
+    <label>メールアドレス(確認)</label>
+    <%= f.password_field :password_confirmation %><br>
+    <label>ニックネーム</label>
+    <%= f.text_field :nickname %><br>
     <%= f.submit "仮登録" %>
   <% end %>
 </div>

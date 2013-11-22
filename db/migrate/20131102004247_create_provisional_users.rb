@@ -14,7 +14,7 @@ class CreateProvisionalUsers < ActiveRecord::Migration
       t.date :birthday # 生年月日
       t.string :email # 一応権限確認時のデータを持っておく
       t.string :login_id # login_idチェックのときに userテーブルのlogin_idと申し込み中のlogin_idをチェックする
-      t.string :digest_password # ユーザーテーブル作成時にcopyする
+      t.string :password_digest # ユーザーテーブル作成時にcopyする
       t.string :nickname # ニックネーム
       t.timestamps
     end
