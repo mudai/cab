@@ -47,4 +47,15 @@ class User::BaseController < ApplicationController
     @org ||= Organization.find_by(host: request.host)
   end
   helper_method :current_org
+
+  def set_login_session(user)
+    session[:user_id] = user.id 
+    cookies.signed[:secure_user_id] = {secure: true, value: "fly_secure_key_#{user.id}"}
+  end
+
+  def clear_login_session
+    # new, destroyでログインセッションを綺麗にする
+    session[:user_id] = nil
+    cookies.delete(:secure_user_id)
+  end
 end

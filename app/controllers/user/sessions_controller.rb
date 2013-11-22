@@ -13,8 +13,7 @@ class User::SessionsController < User::BaseController
   def create
     @auth_form = AuthenticationForm.new(request, login_params)
     if @auth_form.submit
-      session[:user_id] = @auth_form.user.id
-      cookies.signed[:secure_user_id] = {secure: true, value: "fly_secure_key_#{@auth_form.user.id}"}
+      set_login_session @auth_form.user
       redirect_to session.delete(:return_to) || root_path, notice: "Logged in!"
     else
       flash.now.alert = "Login_id or Password is invalid"
@@ -29,11 +28,5 @@ class User::SessionsController < User::BaseController
   private
   def login_params
     params.require(:authentication_form).permit(:login_id, :password)
-  end
-
-  def clear_login_session
-    # new, destroyでログインセッションを綺麗にする
-    session[:user_id] = nil
-    cookies.delete(:secure_user_id)
   end
 end

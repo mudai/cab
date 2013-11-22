@@ -26,12 +26,17 @@ class User::RegistrationsController < User::BaseController
 
   # /signup_token/:token 認証トークン確認ページ
   def signup_token
-    @define = RegistrationService::Definitive.new(token: token, host: request.host)
-    if @define.confirm
+    # new, destroyでログインセッションを綺麗にする
+    clear_login_session
+
+    define = RegistrationService::Definitive.new(token: params[:token].to_s, host: request.host)
+    if define.confirm
       # 当該ユーザーのログイン処理を行う
+      set_login_session define.confirmed_user
+
       redirect_to signup_confimed_path
     else
-      # エラーの場合はrender :token_error
+      redirect_to token_error_path
     end
   end
 
