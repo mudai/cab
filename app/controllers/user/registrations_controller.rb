@@ -26,15 +26,19 @@ class User::RegistrationsController < User::BaseController
 
   # /signup_token/:token 認証トークン確認ページ
   def signup_token
-    # エラーの場合はrender :token_error
-  end
-
-  # /signup_token_process
-  def signup_token_process
+    @define = RegistrationService::Definitive.new(token: token, host: request.host)
+    if @define.confirm
+      # 当該ユーザーのログイン処理を行う
+      redirect_to signup_confimed_path
+    else
+      # エラーの場合はrender :token_error
+    end
   end
 
   # トークンエラー redirectする
   def token_error
+    # トークンが不正か、無効化されています。
+    # 既存を参考にする
   end
 
   # /signup_confirmed 完了ページ

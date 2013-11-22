@@ -7,7 +7,7 @@ class RegistrationForm
   # TODO: バリデーション
   validates_with SubscriptionValidator # code, number, birthday, family_name_kana, first_name_kana これはこのバリデータに任せる
   validates :host, presence: true
-  # validates :login_id, precence: true, uniqueness: {scope: :organization} # カスタムバリデータに変更する
+  validates :login_id, presence: true# , uniqueness: {scope: :organization} # カスタムバリデータに変更する
 
   attr_accessor :host, :code, :number, :family_name, :first_name, :family_name_kana, :first_name_kana,
     :birthday, :email, :email_confirmation, :login_id, :password, :password_confirmation, :nickname
