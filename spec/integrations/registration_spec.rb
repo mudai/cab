@@ -159,12 +159,13 @@ describe "ユーザー登録" do
     context "本登録フロー" do
       context "存在するtokenurl" do
         context "有効時間内" do
-          xit "login_id,password,ニックネーム設定画面へ遷移すること"
-          xit "login_id,password,ニックネームが不正だった場合、バリデーションエラーとなること"
-          xit "login_id,password,ニックネームが正しい場合、登録完了ページへ遷移すること"
+          xit "本登録完了画面へ遷移すること"
+          xit "本登録完了画面へ遷移した場合、userテーブルへ正しい情報が書き込まれること"
+          xit "本登録完了画面を閉じて通常どおりのloginができること"
           xit "登録完了ページにはトップページへのリンクがあること"
         end
         context "有効時間外" do
+          xit "tokenが無効な旨を表示すること"
         end
       end
       context "有効時間内で正しいtokenurl" do
