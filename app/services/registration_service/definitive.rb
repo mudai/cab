@@ -2,6 +2,7 @@ class RegistrationService::Definitive
   # 本登録時に別セッションで二重登録ができないようにする
   attr_accessor :host, :token
 
+  # includeして外す
   def initialize(attributes = {}) # TODO: active modelをインクルードして取っ払う？
     attributes.try(:each) do |name, value|
       send("#{name}=", value) rescue nil
@@ -27,6 +28,8 @@ class RegistrationService::Definitive
         # 作成したユーザーをconfirmed_userにセット
         @confirmed_user = user
       end
+
+      # 登録完了メールの送信 TODO: 
 
       true
     else # 有効期間外か見つからない

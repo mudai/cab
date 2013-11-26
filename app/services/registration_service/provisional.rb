@@ -34,7 +34,7 @@ class RegistrationService::Provisional
   private
 
   def extend_at
-    # DBに格納する？
+    # DBに格納する？ TODO: 
     7.days
   end
 
