@@ -12,6 +12,14 @@ module MultiParameterAttributes
     end
   end
 
+  def initialize(attributes = {})
+    self.attributes = attributes
+  end
+
+  def attributes
+    Hash[instance_variable_names.map{|v| [v[1..-1].to_sym, instance_variable_get(v)]}]
+  end
+
   def attributes=(attrs)
     multi_parameter_attributes = []
     attrs.each do |name, value|
@@ -19,11 +27,15 @@ module MultiParameterAttributes
       if name.to_s.include?("(")
         multi_parameter_attributes << [ name, value ]
       else
-        writer_method = "#{name}="
+        writer_method = "#{name.to_s}="
         if respond_to?(writer_method)
           self.send(writer_method, value)
         else
-          self[name.to_s] = value
+          begin
+            self[name.to_s] = value
+          rescue
+            # 関係ないattributesが来たらスルー
+          end
         end
       end
     end

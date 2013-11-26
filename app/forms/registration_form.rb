@@ -13,30 +13,10 @@ class RegistrationForm
     :birthday, :email, :email_confirmation, :login_id, :password, :password_confirmation, :nickname
   form_multi_parameter :birthday, Date
 
-  def initialize(params = {})
-    self.attributes = params
-  end
-
   # ログインボタンを押されたときの処理
   def submit
-    provisional = RegistrationService::Provisional.new(attributes)
+    provisional = RegistrationService::Provisional.new(self.attributes)
 
-    if valid? && provisional.regist # パラメータのバリデーション＆権限チェックと仮登録レコードの作成
-     
-      token = provisional.signup_token # 登録が問題なければtokenが発行される
-      User::Registrations::ProvisionalMailer.provisional_mail(
-        attributes.merge(token: token)
-      ).deliver
-
-      true
-    else # 入力チェックエラーの場合は一律のエラーメッセージをコントローラー側で出す
-      false
-    end
-  end
-
-  private
-
-  def attributes
-    Hash[instance_variable_names.map{|v| [v[1..-1].to_sym, instance_variable_get(v)]}]
+    valid? && provisional.regist # パラメータのバリデーション＆権限チェックと仮登録レコードの作成とメールの送信
   end
 end

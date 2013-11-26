@@ -7,10 +7,6 @@ class AuthenticationForm
   # カスタムバリデータで認証チェックを行う
   attr_reader :user
 
-  def persisted?
-    false
-  end
-
   def initialize(request, params = {})
     self.request = request
 

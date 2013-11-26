@@ -1,13 +1,9 @@
 class RegistrationService::Provisional
+  include MultiParameterAttributes
+
   attr_accessor :host, :code, :number, :family_name, :first_name, :family_name_kana, :first_name_kana,
     :birthday, :email, :login_id, :password, :nickname
   attr_reader :signup_token
-
-  def initialize(attributes = {}) # TODO: active modelをインクルードして取っ払う？
-    attributes.try(:each) do |name, value|
-      send("#{name}=", value) rescue nil
-    end
-  end
 
 
   def regist # 仮登録処理　関連するレコードを作る
@@ -24,7 +20,15 @@ class RegistrationService::Provisional
       reset_provisional_user(org, info) # 他のtokenを無効化
       generate_provisional_user(org, info) # 新しいtokenの作成
     end
+
+    send_email
+
     true
+  end
+
+  # 仮登録メールを送信する
+  def send_email
+    User::Registrations::ProvisionalMailer.provisional_mail(self.attributes).deliver
   end
 
   private
@@ -59,7 +63,7 @@ class RegistrationService::Provisional
     onetime_token = org.onetime_tokens.create(
       user_id: nil, # 仮登録時なのでnil
       status: true,
-      token_type: "registration",
+      token_type: "registration", # ユーザー登録のtoken_type
       token: @signup_token,
       expired_at: Time.now + extend_at
     )
