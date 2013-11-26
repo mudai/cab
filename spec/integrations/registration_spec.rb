@@ -157,12 +157,46 @@ describe "ユーザー登録" do
       end
     end
     context "本登録フロー" do
+      before do
+        visit "http://www.qupio.com/signup"
+        fill_in "registration_form_code", with: "muta"
+        fill_in "registration_form_number", with: "takaaki"
+        fill_in "registration_form_family_name_kana", with: "ムタ"
+        fill_in "registration_form_first_name_kana", with: "タカアキ"
+        select "1984", from: "registration_form_birthday_1i"
+        select "8", from: "registration_form_birthday_2i"
+        select "17", from: "registration_form_birthday_3i"
+
+        fill_in "registration_form_email", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_email_confirmation", with: "muta.takaaki@hcc-jp.com"
+        fill_in "registration_form_login_id", with: "login_id"
+        fill_in "registration_form_password", with: "password"
+        fill_in "registration_form_password_confirmation", with: "password"
+        fill_in "registration_form_nickname", with: "nickname"
+        click_button '仮登録'
+      end
       context "存在するtokenurl" do
         context "有効時間内" do
-          xit "本登録完了画面へ遷移すること"
-          xit "本登録完了画面へ遷移した場合、userテーブルへ正しい情報が書き込まれること"
-          xit "本登録完了画面を閉じて通常どおりのloginができること"
-          xit "登録完了ページにはトップページへのリンクがあること"
+          it "本登録完了画面へ遷移すること" do
+            visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
+            current_path.should == "/signup_confirmed"
+          end
+          it "本登録完了画面へ遷移した場合、userテーブルへ正しい情報が書き込まれること" do
+            visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
+            user = User.last
+            user.login_id.should == "login_id"
+            user.profile.nickname.should == "nickname"
+          end
+          it "本登録完了画面を閉じて通常どおりのloginができること" do
+            visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
+
+            visit 'http://www.qupio.com/login'
+            fill_in 'authentication_form_login_id', with: 'login_id'
+            fill_in 'authentication_form_password', with: 'password'
+            click_button 'ログイン'
+            current_path.should == '/'
+            page.should have_content("Logged in!")
+          end
         end
         context "有効時間外" do
           xit "tokenが無効な旨を表示すること"

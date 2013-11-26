@@ -22,6 +22,7 @@ class RegistrationService::Definitive
           u.login_id = prov.login_id
           u.password_digest = prov.password_digest
         end
+        user.build_profile.nickname = prov.nickname
         user.save!(validate: false) # パスワードは暗号化させたままそのまま格納
         # ユーザーの作成が問題なければ他のtokenを無効化する
         onetime_token.update!(status: false)
