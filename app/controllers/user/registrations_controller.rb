@@ -34,7 +34,7 @@ class User::RegistrationsController < User::BaseController
       # 当該ユーザーのログイン処理を行う
       set_login_session define.confirmed_user
 
-      redirect_to signup_confimed_path
+      redirect_to signup_confirmed_path
     else
       redirect_to signup_token_error_path
     end
