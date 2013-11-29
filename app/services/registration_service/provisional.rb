@@ -49,7 +49,7 @@ class RegistrationService::Provisional
   def reset_provisional_user(org, info)
     # 仮登録データの無効化
     # 仮登録データにひもづくtokenの無効化
-    # 対した件数も無いと思われるのでloopにした
+    # 対した件数も無いと思われるのでeachにした
     org.provisional_users.where(subscriber_information_id: info.id).each do |prv_user|
       prv_user.update(status: false)
       prv_user.onetime_token.update(status: false)
@@ -58,7 +58,6 @@ class RegistrationService::Provisional
 
   # トークンとprovisional_user(仮登録ユーザー)を発行する
   def generate_provisional_user(org, info)
-    # TODO: tokenの作成
     @signup_token = generate_token
     onetime_token = org.onetime_tokens.create(
       user_id: nil, # 仮登録時なのでnil

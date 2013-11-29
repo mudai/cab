@@ -14,8 +14,6 @@ class AuthenticationService
     user.present?
   end
 
-
-
   class << self
     # 認証処理の後に行うコールバック
     def after_authenticate!(user, request)
