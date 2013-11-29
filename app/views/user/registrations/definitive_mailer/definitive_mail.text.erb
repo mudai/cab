@@ -1,6 +1,6 @@
 <%= @attributes[:nickname] %>様
 
-下記の情報で登録の申し込みを承りました。
+下記の情報で本登録が完了しました。
 
 保険証記号: <%= @attributes[:code] %>
 保険証番号: <%= @attributes[:number] %>
@@ -9,9 +9,12 @@
 
 メールアドレス: <%= @attributes[:email] %>
 
-登録を完了させるには下記のURLをクリックし登録を完了させてください。
+ログインID: <%= @attributes[:login_id] %>
+パスワード: 仮登録時にご入力いただいたパスワード
 
-<%= signup_token_url(token: @attributes[:signup_token])%>
+下記のURLをクリックしログインしてください。
+<%= login_url %>
+
 
 ※ このメールは送信専用のメールアドレスから配信されています。
 返信いただいてもお答えできませんのでご了承ください。
