@@ -187,6 +187,8 @@ describe "ユーザー登録" do
             user.login_id.should == "login_id"
             user.profile.nickname.should == "nickname"
           end
+          xit "本登録完了画面へ遷移した場合、登録勘R尿メールが送信されること" do
+          end
           it "本登録完了画面を閉じて通常どおりのloginができること" do
             visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
 
@@ -199,15 +201,19 @@ describe "ユーザー登録" do
           end
         end
         context "有効時間外" do
-          xit "tokenが無効な旨を表示すること"
+          before do
+            Timecop.travel(Time.now + 30.days)
+          end
+          after do
+            Timecop.return
+          end
+          it "tokenが無効な旨を表示すること" do
+            visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
+            current_path.should == "/signup_token_error"
+          end
         end
       end
-      context "有効時間内で正しいtokenurl" do
-        xit "完了画面へ遷移しログイン状態となっていること"
-        xit "完了画面へ遷移し登録完了メールが送信されること"
-      end
-      xit "無効なtokenurlの場合は「既に認証済みかURLが不正かタイムアウト」と言う旨のページとなること" # render?
-      xit "有効なtokenurlでタイムアウト状態であれば「既に認証済みかURLが不正かタイムアウト」と言う旨のページとなること"
+      xit "既に承認済みのURLの場合token errorのページへ遷移すること"
       xit "/へ遷移すると既にログイン状態となっていて/loginへリダイレクトしないこと"
     end
   end
