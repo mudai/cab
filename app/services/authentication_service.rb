@@ -14,25 +14,29 @@ class AuthenticationService
     user.present?
   end
 
-  # 認証処理の後に行うコールバック
-  def after_authenticate!(request)
-    now = Time.now
-    user.first_logged_in_at ||= now # 初回ログイン日時
-    user.last_logged_in_at = now # 最終ログイン日時の更新
-    ActiveRecord::Base.transaction do
-      user.save!
-      authenticate_logging!(now, request)
-    end
-  end
 
-  # ログインログをとる
-  def authenticate_logging!(now, request)
-    # 認証後のログインログ書き込み処理を入れる
-    user.login_histories.create!(
-      ip_address: request.remote_ip,
-      user_agent: request.user_agent,
-      logged_in_at: now
-    )
+
+  class << self
+    # 認証処理の後に行うコールバック
+    def after_authenticate!(user, request)
+      now = Time.now
+      user.first_logged_in_at ||= now # 初回ログイン日時
+      user.last_logged_in_at = now # 最終ログイン日時の更新
+      ActiveRecord::Base.transaction do
+        user.save!
+        authenticate_logging!(user, now, request)
+      end
+    end
+    # ログインログをとる
+    # オブジェクトに依存しないclassメソッドにする
+    def authenticate_logging!(user, now, request)
+      # 認証後のログインログ書き込み処理を入れる
+      user.login_histories.create!(
+        ip_address: request.remote_ip,
+        user_agent: request.user_agent,
+        logged_in_at: now
+      )
+    end
   end
 
   private

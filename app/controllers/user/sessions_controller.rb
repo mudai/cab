@@ -13,6 +13,7 @@ class User::SessionsController < User::BaseController
   def create
     @auth_form = AuthenticationForm.new(request, login_params)
     if @auth_form.submit
+      # ログイン処理
       set_login_session @auth_form.user
       redirect_to session.delete(:return_to) || root_path, notice: "Logged in!"
     else

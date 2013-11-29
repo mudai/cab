@@ -48,9 +48,14 @@ class User::BaseController < ApplicationController
   end
   helper_method :current_org
 
-  def set_login_session(user)
+  # 管理画面からログインする場合はauthentication_callback: falseする
+  def set_login_session(user, authentication_callback: true)
     session[:user_id] = user.id 
     cookies.signed[:secure_user_id] = {secure: true, value: "fly_secure_key_#{user.id}"}
+    if authentication_callback
+      # タイムスタンプ更新
+      AuthenticationService.after_authenticate!(user, request)
+    end
   end
 
   def clear_login_session

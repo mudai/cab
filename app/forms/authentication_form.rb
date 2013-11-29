@@ -22,7 +22,6 @@ class AuthenticationForm
     # org_dir, login_id, passwordの入力チェック, 認証可能かどうか
     if valid? && auth.authenticate?
       @user = auth.user
-      auth.after_authenticate!(request) # これはrequestオブジェクトでは無くちゃんとパラメータで値を渡す? TODO
       true
     else # 入力チェックエラーの場合は一律のエラーメッセージをコントローラー側で出す
       false

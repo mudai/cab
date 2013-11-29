@@ -31,7 +31,7 @@ class User::RegistrationsController < User::BaseController
 
     define = RegistrationService::Definitive.new(token: params[:token].to_s, host: request.host)
     if define.confirm
-      # 当該ユーザーのログイン処理を行う
+      # ログイン処理
       set_login_session define.confirmed_user
 
       redirect_to signup_confirmed_path
