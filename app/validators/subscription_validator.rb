@@ -1,5 +1,6 @@
 class SubscriptionValidator < ActiveModel::Validator
   def validate(r)
+    return if r.host.blank?
     org = ::Organization.find_by(host: r.host) # hostが存在することは他のバリデータで行う
 
     info = org.subscriber_informations.search(
