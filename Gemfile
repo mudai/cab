@@ -45,7 +45,7 @@ gem "chanko"
 gem 'jpmobile'
 
 group :development do
-  gem 'spring' # これを新しく追加
+  gem 'spring', '0.0.11' # これを新しく追加 1.0.0じゃ動かなかったのでバージョン固定
   gem 'capistrano'
   gem 'letter_opener_web' # メール送信まわりの確認
 end
