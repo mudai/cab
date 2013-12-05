@@ -187,7 +187,11 @@ describe "ユーザー登録" do
             user.login_id.should == "login_id"
             user.profile.nickname.should == "nickname"
           end
-          xit "本登録完了画面へ遷移した場合、登録勘R尿メールが送信されること" do
+          it "本登録完了画面へ遷移した場合、登録完了メールが送信されること" do
+            visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
+            last_email.should_not be_nil
+            last_email.to.should include("muta.takaaki@hcc-jp.com")
+            last_email.body.should include("完了しました")
           end
           it "本登録完了画面を閉じて通常どおりのloginができること" do
             visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
@@ -213,11 +217,26 @@ describe "ユーザー登録" do
           end
         end
       end
-      xit "既に承認済みのURLの場合token errorのページへ遷移すること"
-      xit "/へ遷移すると既にログイン状態となっていて/loginへリダイレクトしないこと"
+      it "既に承認済みのURLの場合token errorのページへ遷移すること" do
+        token = OnetimeToken.last.token
+        visit "http://www.qupio.com/signup_token/#{token}"
+        current_path.should == "/signup_confirmed"
+        visit "http://www.qupio.com/signup_token/#{token}"
+        current_path.should == "/signup_token_error"
+      end
+      it "/へ遷移すると既にログイン状態となっていて/loginへリダイレクトしないこと" do
+        token = OnetimeToken.last.token
+        visit "http://www.qupio.com/signup_token/#{token}"
+        visit "http://www.qupio.com/"
+        current_path.should == "/"
+        page.should have_content("ログイン後")
+      end
     end
   end
   context "存在しないホストへのアクセス" do
-    xit "404となること"
+    it "404となること" do
+      visit "http://www.qupio.jp/signup"
+      page.status_code.should == 404
+    end
   end
 end
