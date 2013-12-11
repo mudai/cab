@@ -7,10 +7,10 @@ class RegistrationForm
   # TODO: バリデーション
   validates_with SubscriptionValidator # code, number, birthday, family_name_kana, first_name_kana これはこのバリデータに任せる
   validates :host, presence: true
-  validates :login_id, presence: true, length: {minimum: 5, maximum: 255}
+  validates :login_id, presence: true, length: {minimum: 4, maximum: 255}
   validate :login_id_unique_validater
   # , uniqueness: {scope: :organization} # カスタムバリデータに変更する
-  validates :password, presence: true, length: { minimum: 5, maximum: 40 }, confirmation: true
+  validates :password, presence: true, length: {minimum: 4, maximum: 255}, confirmation: true
   validates :nickname, presence: true, length: {minimum: 1, maximum: 255}
   validates :email, presence: true, length: { maximum: 255 }, confirmation: true, email: true
 
@@ -29,5 +29,10 @@ class RegistrationForm
   def login_id_unique_validater
     # login_idのユニークチェック
     # 全体でユニークでよいと思う。
+    # UserテーブルとProvisionalUserテーブルのlogin_idのチェックを行う
+    if User.find_by(login_id: self.login_id) || ProvisionalUser.find_by(login_id: self.login_id, status: true)
+      message = I18n.t('activerecord.errors.messages.already_used')
+      errors.add(:login_id, message)
+    end
   end
 end

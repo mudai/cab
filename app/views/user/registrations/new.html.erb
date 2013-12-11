@@ -1,4 +1,16 @@
 <p>ユーザー登録</p>
+
+<% if @regist_form.errors.any? %>
+  <div id="error">
+    <h2><%= pluralize(@regist_form.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <ul>
+      <% @regist_form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="registration">
   <%= form_for @regist_form, url: signup_process_path do |f| %>
     <label>記号</label>

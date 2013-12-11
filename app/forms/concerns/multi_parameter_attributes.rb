@@ -1,9 +1,10 @@
 module MultiParameterAttributes
   def self.included(base)
     base.class_eval do
+      @mapping = {} # 初期化
+
       def self.form_multi_parameter(key, klass)
-        @mapping ||= {}
-        @mapping.merge!({key => klass})
+        @mapping[key] = klass # マッピングを追加
       end
 
       def self.form_multi_parameters
