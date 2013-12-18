@@ -30,13 +30,22 @@ class User::RegistrationsController < User::BaseController
     clear_login_session
 
     define = RegistrationService::Definitive.new(token: params[:token].to_s, host: request.host)
-    if define.confirm
+    if define.confirm && define.error == RegistrationService::Definitive::Error::NOTHING
       # ログイン処理
       set_login_session define.confirmed_user
 
       redirect_to signup_confirmed_path
     else
-      redirect_to signup_token_error_path
+      case define.error
+      when RegistrationService::Definitive::Error::LOGIN_ID_EXIST
+        # 登録時に時間差でバリデーションエラーになった場合、再度仮登録ページに遷移するような文言にする
+        #
+        redirect_to signup_token_error_path
+      when RegistrationService::Definitive::Error::TOKEN_EXPIRED
+        redirect_to signup_token_error_path
+      else
+        redirect_to signup_token_error_path
+      end
     end
   end
 
