@@ -1,11 +1,29 @@
+#
+# ユーザー本登録サービス
+# Authors:: t-muta
+# Date:: 2014-01-10
+# LastUpdate:: 2014-01-10
+#
+#=== 履歴
+#
+#* 1 2014-01-10
+#  * rdoc方式でコメントを追加
+#
+
 class RegistrationService::Definitive
-  # 本登録時に別セッションで二重登録ができないようにする
+
+  #
+  # 本登録に必要なhostと仮登録トークンパラメータ
+  #
   attr_accessor :host, :token
 
+  #
+  # 本登録時に発生しうるエラーのタイプ
+  #
   module Error
-    NOTHING = "nothing" # 問題なし
+    NOTHING = "nothing"               # 問題なし
     LOGIN_ID_EXIST = "login_id_exist" # ログインIDが重複した場合
-    TOKEN_EXPIRED = "token_expired" # onetime_tokenの有効期限が切れた場合
+    TOKEN_EXPIRED = "token_expired"   # トークンの有効期限が切れた場合
   end
 
   # includeして外す
@@ -15,6 +33,9 @@ class RegistrationService::Definitive
     end
   end
 
+  #
+  # 本登録処理をおこなう
+  #
   def confirm
     org = Organization.find_by(host: host)
     onetime_token = org.onetime_tokens.find_by(token: token, token_type: "registration", status: true)
@@ -62,16 +83,27 @@ class RegistrationService::Definitive
     true
   end
 
+  #
+  # 登録完了メールの送信
+  #
   def send_mail(attrs)
     User::Registrations::DefinitiveMailer.definitive_mail(attrs.symbolize_keys).deliver
   end
 
-  # confirmを押下して問題なければ対象ユーザーが取得できる
+  #
+  # 本登録済みユーザーの取得
+  #  confirmメソッドを呼び出し、問題なく登録できたユーザーが取得できる
+  #
   def confirmed_user
     @confirmed_user
   end
 
-  # エラーが発生した場合はエラーのタイプが入る
+  #
+  # エラー発生時にエラータイプが入る
+  # NOTHING = "nothing"               # 問題なし
+  # LOGIN_ID_EXIST = "login_id_exist" # ログインIDが重複した場合
+  # TOKEN_EXPIRED = "token_expired"   # トークンの有効期限が切れた場合
+  #
   def error
     @error
   end
