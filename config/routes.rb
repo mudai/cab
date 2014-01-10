@@ -9,7 +9,7 @@ Fly::Application.routes.draw do
     post 'signup_process', to: 'registrations#create', as: 'signup_process'
     get 'signup_provisional', to: 'registrations#signup_provisional', as: 'signup_provisional'
     get 'signup_token/:token', to: 'registrations#signup_token', as: 'signup_token'
-    get 'signup_token_error', to: 'registrations#signup_token_error', as: 'signup_token_error'
+    get 'signup_error', to: 'registrations#signup_error', as: 'signup_error'
     get 'signup_confirmed', to: 'registrations#signup_confirmed', as: 'signup_confirmed'
 
     resource :account, only: [:edit, :update]
@@ -26,6 +26,7 @@ Fly::Application.routes.draw do
   #  get 'login', to: 'sessions#new', as: 'admin_login'
   #  get 'logout', to: 'sessions#destroy', as: 'admin_logout'
   #end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

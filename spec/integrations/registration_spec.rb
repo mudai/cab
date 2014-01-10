@@ -213,7 +213,8 @@ describe "ユーザー登録" do
           end
           it "tokenが無効な旨を表示すること" do
             visit "http://www.qupio.com/signup_token/#{OnetimeToken.last.token}"
-            current_path.should == "/signup_token_error"
+            current_path.should == "/signup_token/#{OnetimeToken.last.token}"
+            page.should have_content("token_expired") #とりあえずテスト
           end
         end
       end
