@@ -21,9 +21,10 @@ class RegistrationService::Definitive
   # 本登録時に発生しうるエラーのタイプ
   #
   module Error
-    NOTHING = "nothing"               # 問題なし
-    LOGIN_ID_EXIST = "login_id_exist" # ログインIDが重複した場合
-    TOKEN_EXPIRED = "token_expired"   # トークンの有効期限が切れた場合
+    NOTHING = "nothing"                 # 問題なし
+    TOKEN_NOT_EXIST = "token_not_exist" # トークンが存在しない
+    LOGIN_ID_EXIST = "login_id_exist"   # ログインIDが重複した場合
+    TOKEN_EXPIRED = "token_expired"     # トークンの有効期限が切れた場合
   end
 
   # includeして外す
@@ -39,6 +40,13 @@ class RegistrationService::Definitive
   def confirm
     org = Organization.find_by(host: host)
     onetime_token = org.onetime_tokens.find_by(token: token, token_type: "registration", status: true)
+
+    # トークンが見つからない場合は無効
+    # 既に本登録済みの場合にもnilとなる
+    if onetime_token.nil?
+      @error = Error::TOKEN_NOT_EXIST
+      return false
+    end
 
     # 有効期間外であれば無効
     if onetime_token && onetime_token.expired_at < Time.now

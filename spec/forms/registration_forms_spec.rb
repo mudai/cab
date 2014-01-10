@@ -44,18 +44,17 @@ describe "バリデーション" do
         RegistrationForm.new(login_id: @user.login_id).should have(1).errors_on(:login_id)
       end
     end
-    context "既に別のユーザーで仮登録利用されている場合は使えないこと" do
+    context "既に別のユーザーで仮登録利用されている場合" do
      before do
         @org = FactoryGirl.create(:organization)
         @subscriber_information = FactoryGirl.create(:subscriber_information, organization: @org)
         @prov_user = FactoryGirl.create(:provisional_user, organization: @org)
      end
-     it "使えないこと" do
-        # 団体関係なく使えない
-        raise "すでに仮登録状態のlogin_idは仮登録に利用できる" # メールアドレスが間違っている場合も考えられるので
-        # 本登録ボタンを押した際にlogin_idが利用されてしまった場合は再度登録フローに誘導
-        p @prov_user
-        RegistrationForm.new(login_id: @prov_user.login_id).should have(1).errors_on(:login_id)
+     it "使えること" do
+       # 団体関係なく使えない
+       # 本登録を先に行った方が勝ち
+       # メールアドレスが間違っている場合も考えられるので
+       RegistrationForm.new(login_id: @prov_user.login_id).should have(0).errors_on(:login_id)
      end
     end
   end

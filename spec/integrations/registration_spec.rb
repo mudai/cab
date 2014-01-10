@@ -223,7 +223,8 @@ describe "ユーザー登録" do
         visit "http://www.qupio.com/signup_token/#{token}"
         current_path.should == "/signup_confirmed"
         visit "http://www.qupio.com/signup_token/#{token}"
-        current_path.should == "/signup_token_error"
+        current_path.should == "/signup_token/#{token}"
+        page.should have_content("token_not_exist") #とりあえずテスト
       end
       it "/へ遷移すると既にログイン状態となっていて/loginへリダイレクトしないこと" do
         token = OnetimeToken.last.token
