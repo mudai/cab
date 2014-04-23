@@ -12,6 +12,7 @@ class User::RegistrationsController < User::BaseController
 
   # /signup_process
   def create
+    # TODO: request.hostはCurrent.requestとして引き回す方が良さそう?
     @regist_form = RegistrationForm.new(regist_params.merge(host: request.host))
     if @regist_form.submit
       redirect_to signup_provisional_path
