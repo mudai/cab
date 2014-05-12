@@ -11,11 +11,26 @@
 #
 
 class RegistrationService::Definitive
+  include ActiveModel::Model
 
   #
   # 本登録に必要な仮登録トークンパラメータ
   #
   attr_accessor :token
+  attr_reader :onetime_token
+
+  validate :token_exists?
+  validate :token_expired?
+  validate :login_id_duplicate?
+
+  def token_exists?
+  end
+
+  def token_expired?
+  end
+
+  def login_id_duplicate?
+  end
 
   #
   # 本登録時に発生しうるエラーのタイプ
@@ -38,7 +53,7 @@ class RegistrationService::Definitive
   # 本登録処理をおこなう
   #
   def confirm
-    onetime_token = OnetimeToken.find_by(token: token, token_type: "registration", status: true)
+    @onetime_token = OnetimeToken.find_by(token: token, token_type: "registration", status: true)
 
     # トークンが見つからない場合は無効
     # 既に本登録済みの場合にもnilとなる

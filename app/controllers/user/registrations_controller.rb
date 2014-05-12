@@ -12,8 +12,7 @@ class User::RegistrationsController < User::BaseController
 
   # /signup_process
   def create
-    # TODO: request.hostはCurrent.requestとして引き回す方が良さそう?
-    @regist_form = RegistrationForm.new(regist_params.merge(host: request.host))
+    @regist_form = RegistrationForm.new(regist_params)
     if @regist_form.submit
       redirect_to signup_provisional_path
     else
@@ -23,6 +22,7 @@ class User::RegistrationsController < User::BaseController
 
   # /signup_provisional 仮登録完了ページ
   def signup_provisional
+    # 直接GETできないように考慮する
   end
 
   # /signup_token/:token 認証トークン確認ページ
@@ -30,7 +30,7 @@ class User::RegistrationsController < User::BaseController
     # new, destroyでログインセッションを綺麗にする
     clear_login_session
 
-    @define = RegistrationService::Definitive.new(token: params[:token].to_s, host: request.host)
+    @define = RegistrationService::Definitive.new(token: params[:token].to_s)
     if @define.confirm && @define.error == RegistrationService::Definitive::Error::NOTHING
       # ログイン処理
       set_login_session @define.confirmed_user
@@ -53,7 +53,6 @@ class User::RegistrationsController < User::BaseController
 
   private
   def regist_params
-    params.require(:registration_form).permit(:code, :number, :family_name, :first_name, :family_name_kana, :first_name_kana,
-    :birthday, :login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation)
+    params.require(:registration_form).permit(:login_id, :password, :password_confirmation, :nickname, :email, :email_confirmation)
   end
 end
