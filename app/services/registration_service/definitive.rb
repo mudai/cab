@@ -13,9 +13,9 @@
 class RegistrationService::Definitive
 
   #
-  # 本登録に必要なhostと仮登録トークンパラメータ
+  # 本登録に必要な仮登録トークンパラメータ
   #
-  attr_accessor :host, :token
+  attr_accessor :token
 
   #
   # 本登録時に発生しうるエラーのタイプ
@@ -38,8 +38,7 @@ class RegistrationService::Definitive
   # 本登録処理をおこなう
   #
   def confirm
-    org = Organization.find_by(host: host)
-    onetime_token = org.onetime_tokens.find_by(token: token, token_type: "registration", status: true)
+    onetime_token = OnetimeToken.find_by(token: token, token_type: "registration", status: true)
 
     # トークンが見つからない場合は無効
     # 既に本登録済みの場合にもnilとなる
@@ -61,7 +60,7 @@ class RegistrationService::Definitive
 
     # 実際にユーザーテーブルにレコードを作成するタイミングで同じlogin_idのデータが存在した場合は再度仮登録から
     # やり直す必要がある
-    if org.users.find_by(login_id: prov.login_id)
+    if User.find_by(login_id: prov.login_id)
       # 既に重複するLoginIDがあるのであればtokenが有効である必要がないのでstatus: falseに変更する
       onetime_token.try(:update!, {status: false} )
       @error = Error::LOGIN_ID_EXIST
@@ -69,15 +68,12 @@ class RegistrationService::Definitive
     end
 
     ActiveRecord::Base.transaction do
-      user = org.users.new do |u|
+      user = User.new do |u|
         u.login_id = prov.login_id
         u.password_digest = prov.password_digest
       end
       user.build_profile.nickname = prov.nickname
       user.save!(validate: false) # パスワードは暗号化させたままそのまま格納
-      # subscriber_informationのassociated_atとuser_idを更新する
-      subscriber = prov.subscriber_information
-      subscriber.update!(user_id: user.id, associated_at: Time.now)
       # ユーザーの作成が問題なければ他のtokenを無効化する
       onetime_token.update!(status: false)
       # 作成したユーザーをconfirmed_userにセット
@@ -85,7 +81,7 @@ class RegistrationService::Definitive
     end
 
     # 登録完了メールの送信
-    send_mail(prov.attributes.merge(host: host))
+    send_mail(prov.attributes)
 
     @error = Error::NOTHING
     true

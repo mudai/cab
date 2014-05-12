@@ -13,11 +13,10 @@
 class AuthenticationService
 
   #
-  # 団体(organization)を選択するキーがhost名
   # 認証するlogin_id, passwordを与える
   #
-  def initialize(host, login_id, password)
-    @host, @login_id, @password = host, login_id, password
+  def initialize(login_id, password)
+    @login_id, @password = login_id, password
   end
 
   #
@@ -74,14 +73,11 @@ class AuthenticationService
   private
 
   #
-  # ホスト名から団体(organization)を取得し、所属しているユーザーを取得
   # ユーザーのパスワードと渡されたパスワードを比較し、一致するならばuserオブジェクトを返す
   # 一致しないか見つからない場合はnilを返す
   #
   def user_with_password
-    if org = Organization.find_by(host: @host)
-      user = org.users.find_by(login_id: @login_id)
-      user && user.authenticate(@password) # user.rbモデルにhas_secure_passwordをつけておく
-    end
+    user = User.find_by(login_id: @login_id)
+    user && user.authenticate(@password) # user.rbモデルにhas_secure_passwordをつけておく
   end
 end

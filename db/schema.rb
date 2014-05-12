@@ -131,6 +131,6 @@ ActiveRecord::Schema.define(version: 20131102004247) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["organization_id", "login_id"], name: "index_users_on_organization_id_and_login_id"
+  add_index "users", ["organization_id", "login_id"], name: "index_users_on_organization_id_and_login_id", unique: true
 
 end

@@ -20,8 +20,7 @@ class RegistrationService::Provisional
   #
   # 仮登録に必要なパラメータ
   # 
-  attr_accessor :host, :code, :number, :family_name, :first_name, :family_name_kana, :first_name_kana,
-    :birthday, :email, :login_id, :password, :nickname
+  attr_accessor :email, :login_id, :password, :nickname
 
   #
   # 仮登録後に発行するtoken
@@ -32,19 +31,10 @@ class RegistrationService::Provisional
   # 仮登録処理を行う
   #
   def regist
-    org = Organization.find_by(host: host)
-    info = org.subscriber_informations.search(
-      code: code,
-      number: number,
-      birthday: birthday,
-      family_name_kana: family_name_kana,
-      first_name_kana: first_name_kana 
-    )
-
     ActiveRecord::Base.transaction do
-      reset_provisional_user(org, info)
+      reset_provisional_user
       # 不要なtokenを無効化
-      generate_provisional_user(org, info)
+      generate_provisional_user
       # 新しいtokenの作成
     end
 
@@ -89,9 +79,9 @@ class RegistrationService::Provisional
   #
   # 既に発行済みの仮登録トークンがある場合はすべて無効化する
   #
-  def reset_provisional_user(org, info)
+  def reset_provisional_user
     # 件数も多く無いと思われるのでeachでloopし個別にupdate
-    org.provisional_users.where(subscriber_information_id: info.id).each do |prv_user|
+    ProvisionalUser.where(login_id: login_id).each do |prv_user|
       # 仮登録ユーザーの無効化
       prv_user.update(status: false)
       # 仮登録トークンの無効化
@@ -105,11 +95,11 @@ class RegistrationService::Provisional
   #  organizationオブジェクト
   #  subscriber_informationオブジェクト
   #
-  def generate_provisional_user(org, info)
+  def generate_provisional_user
     @signup_token = generate_token
 
     # 仮登録ユーザーに紐づくワンタイムトークンを生成
-    onetime_token = org.onetime_tokens.create(
+    onetime_token = OnetimeToken.create(
       user_id: nil, # 仮登録時なのでnil
       status: true,
       token_type: "registration", # ユーザー登録のtoken_type
@@ -119,16 +109,8 @@ class RegistrationService::Provisional
 
     # 仮登録ユーザーの生成
     prov = org.provisional_users.create(
-      subscriber_information_id: info.id,
       onetime_token_id: onetime_token.id,
       status: true, # true: 仮登録受付, false: 仮登録完了
-      family_name: family_name, # 名字
-      first_name: first_name, # 名前
-      family_name_kana: family_name_kana,
-      first_name_kana: first_name_kana,
-      code: code, # 記号
-      number: number, # 番号
-      birthday: birthday, # 生年月日
       email: email,
       login_id: login_id,
       password: password,
