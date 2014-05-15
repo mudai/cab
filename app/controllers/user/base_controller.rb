@@ -19,39 +19,11 @@ class User::BaseController < ApplicationController
   # ユーザーが認証済みか確認
   #
   def authenticate_user!
-    if authorized?
-      # request.hostが変わるとcookieやセッションが変わるはずなので
-      # 基本くることは無い
-      unless current_user.organization.host == request.host
-        render_404
-      end
-    else
+    unless authorized?
       # 認証されていない場合 -> login_pathへリダイレクト
-      if valid_host?
-        # リクエストされたhostが団体に存在する場合、セッションをクリアしlogin_pathへリダイレクト
-        store_location
-        redirect_to login_path
-      else
-        # 存在しない場合は404を返す
-        render_404
-      end
+      store_location
+      redirect_to login_path
     end
-
-  end
-
-  #
-  # リクエストされたhostが団体に存在しない場合は404を返す
-  # TODO: このコード自体が不要？再度検討すること
-  #
-  def host_check!
-    render_404 unless valid_host?
-  end
-
-  #
-  # リクエストされたhostが団体に存在するかを判断
-  #
-  def valid_host?
-    Organization.exists?(host: request.host)
   end
 
   #
@@ -73,18 +45,10 @@ class User::BaseController < ApplicationController
   #
   def current_user
     if !request.ssl? || cookies.signed[:secure_user_id] == "fly_secure_key_#{session[:user_id]}"
-      @current_user ||= User.includes(:organization).find(session[:user_id]) if session[:user_id]
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
   end
   helper_method :current_user
-
-  #
-  # 現在リクエストされている団体を返す
-  #
-  def current_org
-    @org ||= Organization.find_by(host: request.host)
-  end
-  helper_method :current_org
 
   #
   # ログイン処理を行う

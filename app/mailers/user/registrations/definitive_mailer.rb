@@ -10,9 +10,7 @@ class User::Registrations::DefinitiveMailer < Jpmobile::Mailer::Base
     @attributes = attributes # デフォルトのerbテンプレート用
     # templateが無い場合のデフォルトの文章はuser/registrations/definitive_mailer.text.erbが利用される
 
-    org = Organization.find_by(host: attributes[:host])
-    self.class.default_url_options[:host] = org.host
-    if org && template = org.mail_templates.find_by(code: "definitive_mail")
+    if template = MailTemplate.find_by(code: "definitive_mail")
       mail(
         to: attributes[:email],
         subject: ERB.new(template.subject).result(binding),
