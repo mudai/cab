@@ -16,20 +16,17 @@ class User::SessionsController < User::BaseController
   # 認証処理をスキップ
   skip_before_action :authenticate_user!, only: [:new, :create, :destroy]
 
-  # ホストが存在するか確認
-  before_action :host_check!, only: [:new, :create, :destroy]
-
   # ログイン済みの場合もあるのでセッションをクリア
   before_action :clear_login_session, only: [:new, :destroy]
 
   # ログインページ
   def new
-    @auth_form = AuthenticationForm.new(request)
+    @auth_form = AuthenticationForm.new
   end
 
   # ログイン処理
   def create
-    @auth_form = AuthenticationForm.new(request, login_params)
+    @auth_form = AuthenticationForm.new(login_params)
     if @auth_form.submit
       # ログイン処理
       set_login_session @auth_form.user

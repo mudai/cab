@@ -124,6 +124,8 @@ ja:
       other_than: "は%{count}以外の値にしてください。"
       not_found: は見つかりません。
       already_used: は利用されています。
+      not_exist: は存在しません。
+      expired: は有効期間を過ぎています。
     template:
       body: 次の項目を確認してください。
       header:

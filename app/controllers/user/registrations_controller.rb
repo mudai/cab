@@ -3,7 +3,6 @@
 class User::RegistrationsController < User::BaseController
 
   skip_before_action :authenticate_user!
-  before_action :host_check!
 
   # /signup
   def new
@@ -31,18 +30,18 @@ class User::RegistrationsController < User::BaseController
     clear_login_session
 
     @define = RegistrationService::Definitive.new(token: params[:token].to_s)
-    if @define.confirm && @define.error == RegistrationService::Definitive::Error::NOTHING
+    if @define.confirm
       # ログイン処理
       set_login_session @define.confirmed_user
 
       redirect_to signup_confirmed_path
     else
-      render :signup_error
+      render :error
     end
   end
 
   # トークンエラー redirectする
-  def signup_error
+  def error
     # トークンが不正か、無効化されています。
     # 既存を参考にする
   end
